@@ -18,6 +18,6 @@ public static class Constants
 
     public static class Layers
     {
-        public const int Blocks = 1 << 7;
+        public const int Blocks = 1 << 9;
     }
 }

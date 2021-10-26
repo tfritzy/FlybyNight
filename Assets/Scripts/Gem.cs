@@ -82,7 +82,7 @@ public class Gem : MonoBehaviour
     {
         this.color = GetColor(tier);
         this.Value = valueMap[this.color];
-        this.GetComponent<SpriteRenderer>().color = colorMap[this.color];
+        this.GetComponentInChildren<SpriteRenderer>().color = colorMap[this.color];
     }
 
     void OnTriggerEnter2D(Collider2D other)
