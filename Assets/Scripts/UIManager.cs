@@ -12,12 +12,12 @@ public class UIManager : MonoBehaviour
     public GameObject SettingsButton;
     public GameObject DistanceTracker;
     public Text GemCount;
-    public Button ToggleSFXButton;
-    public Button ToggleMusicButton;
+    public Slider SFXSlider;
+    public Slider MusicSlider;
     public GameObject ToggleDifficultyButton;
     // public AudioManager AudioManager;
     public GameObject LeaderboardButton;
-    public Transform FPSSelectButton;
+    public Transform FPSSelectGroup;
 
     private List<Image> colorUIImages;
     private List<Text> colorUIText;
@@ -89,13 +89,13 @@ public class UIManager : MonoBehaviour
         button.transform.Find("Off").gameObject.SetActive(!isOn);
     }
 
-    public void ToggleSFX()
+    public void SetSFXLevel(float value)
     {
         // AudioManager.ToggleSFX();
         SetupAudioSettingsButtons();
     }
 
-    public void ToggleMusic()
+    public void SetMusicLevel(float value)
     {
         // AudioManager.ToggleMusic();
         SetupAudioSettingsButtons();
@@ -218,11 +218,17 @@ public class UIManager : MonoBehaviour
         FormatFPSButtons();
     }
 
+    private Color toggleUnselectedBaseColor = ColorExtensions.Create("#434343");
+    private Color toggleUnselectedTextColor = ColorExtensions.Create("#808080");
+    private Color toggleSelectedTextColor = Color.white;
     private void FormatFPSButtons()
     {
-        FPSSelectButton.transform.Find("30 FPS").Find("On").gameObject.SetActive(Application.targetFrameRate == 30);
-        FPSSelectButton.transform.Find("30 FPS").Find("Off").gameObject.SetActive(Application.targetFrameRate != 30);
-        FPSSelectButton.transform.Find("60 FPS").Find("On").gameObject.SetActive(Application.targetFrameRate == 60);
-        FPSSelectButton.transform.Find("60 FPS").Find("Off").gameObject.SetActive(Application.targetFrameRate != 60);
+        Color activeColor = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
+        Transform fps30 = FPSSelectGroup.transform.Find("30 FPS");
+        Transform fps60 = FPSSelectGroup.transform.Find("60 FPS");
+        fps30.GetComponent<Image>().color = Application.targetFrameRate == 30 ? activeColor : toggleUnselectedBaseColor;
+        fps60.GetComponent<Image>().color = Application.targetFrameRate == 60 ? activeColor : toggleUnselectedBaseColor;
+        fps30.Find("Text").GetComponent<Text>().color = Application.targetFrameRate == 30 ? toggleSelectedTextColor : toggleUnselectedTextColor;
+        fps60.Find("Text").GetComponent<Text>().color = Application.targetFrameRate == 60 ? toggleSelectedTextColor : toggleUnselectedTextColor;
     }
 }
