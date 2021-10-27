@@ -76,7 +76,7 @@ public static class Managers
         {
             if (fadeToBlackScreen == null)
             {
-                fadeToBlackScreen = GameObject.Find("FadeToBlackScreen").GetComponent<FadeToBlack>();
+                fadeToBlackScreen = GameObject.Find("FadeToBlack").GetComponent<FadeToBlack>();
             }
 
             return fadeToBlackScreen;

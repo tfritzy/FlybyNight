@@ -78,7 +78,7 @@ public class Helicopter : MonoBehaviour
         int x = GameState.Player.GetHighestRegionUnlocked() * Constants.DISTANCE_BETWEEN_SAVES;
         this.transform.position = new Vector3(x, GridManager.GetCaveMidAtPos(x), 0) * Constants.BLOCK_WIDTH;
         this.GetComponent<InterpolatedTransform>().ForgetPreviousTransforms();
-        // Managers.UIManager.SetUIForHelicopterHovering();
+        Managers.UIManager.SetUIForHelicopterHovering();
         this.State = HelicopterState.Hovering;
         this.GetComponent<TrailRenderer>().Clear();
 
