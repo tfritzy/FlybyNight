@@ -19,7 +19,7 @@ TagManager:
   - Particles
   - Blocks
   - Vehicles
-  - 
+  - Halo
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Halo
+    uniqueID: 1291594175
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

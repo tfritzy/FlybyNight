@@ -27,7 +27,7 @@ public class Gem : MonoBehaviour
 
     private Dictionary<GemColor, Color> colorMap = new Dictionary<GemColor, Color>
     {
-        {GemColor.Blue, ColorExtensions.Create("#a9c9ff")},
+        {GemColor.Blue, ColorExtensions.Create("#399dff")},
         {GemColor.Green, ColorExtensions.Create("#48FF7E")},
         {GemColor.Purple, ColorExtensions.Create("#F34FFF")},
         {GemColor.Yellow, ColorExtensions.Create("#FFE550")},

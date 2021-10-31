@@ -207,14 +207,14 @@ public class UIManager : MonoBehaviour
     public void Set60FPS()
     {
         Application.targetFrameRate = 60;
-        Time.fixedDeltaTime = 1 / ((float)Application.targetFrameRate);
+        Time.fixedDeltaTime = 1f / 60f;
         FormatFPSButtons();
     }
 
     public void Set30FPS()
     {
         Application.targetFrameRate = 30;
-        Time.fixedDeltaTime = 1 / ((float)Application.targetFrameRate);
+        Time.fixedDeltaTime = 1f / 30f;
         FormatFPSButtons();
     }
 
