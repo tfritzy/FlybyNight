@@ -78,9 +78,9 @@ Material:
     - _pwer: 1
     m_Colors:
     - _Bottom: {r: 0.1792453, g: 0.120060526, b: 0.12457232, a: 0}
-    - _BottomColor: {r: 0, g: 0, b: 0, a: 0}
+    - _BottomColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Top: {r: 0, g: 0, b: 0, a: 0}
-    - _TopColor: {r: 0, g: 0.0630903, b: 0.122641504, a: 0}
+    - _TopColor: {r: 0, g: 0, b: 0, a: 0}
     - _Up: {r: 0, g: 1, b: 0, a: 1}

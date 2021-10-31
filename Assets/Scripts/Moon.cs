@@ -31,10 +31,10 @@ public class Moon : MonoBehaviour
         lastColorUpdateTime = Time.time;
 
         Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
-        // foreach (SpriteRenderer renderer in Sky)
-        // {
-        //     renderer.color = color;
-        // }
+        foreach (SpriteRenderer renderer in Sky)
+        {
+            renderer.color = color;
+        }
 
         moonRenderer.color = ColorExtensions.Lighten(color, .5f);
     }
