@@ -29,15 +29,15 @@ public class SaveMarker : MonoBehaviour
         var main = smallFlames.main;
         main.startColor = baseColor;
 
-        // if (GameState.Player.GetHighestRegionUnlocked() >= ZoneIndex)
-        // {
-        //     Helpers.TriggerAllParticleSystems(Fire.transform, true);
-        //     lit = true;
-        // }
-        // else
-        // {
-        //     Helpers.TriggerAllParticleSystems(Fire.transform, false);
-        // }
+        if (GameState.Player.GetHighestRegionUnlocked() >= ZoneIndex)
+        {
+            Helpers.TriggerAllParticleSystems(Fire.transform, true);
+            lit = true;
+        }
+        else
+        {
+            Helpers.TriggerAllParticleSystems(Fire.transform, false);
+        }
 
         source = this.GetComponent<AudioSource>();
     }
@@ -51,8 +51,8 @@ public class SaveMarker : MonoBehaviour
 
         if (col.CompareTag(Constants.Tags.Helicopter))
         {
-            // Managers.FireworkShooter.Fire();
-            // Helpers.TriggerAllParticleSystems(Fire.transform, true);
+            Managers.FireworkShooter.Fire();
+            Helpers.TriggerAllParticleSystems(Fire.transform, true);
             source.Play();
             lit = true;
         }

@@ -23,10 +23,10 @@ public class GridManager : MonoBehaviour
         ColorExtensions.Create("#2ed549"),
         ColorExtensions.Create("#2ed589"),
         ColorExtensions.Create("#2ed5cb"),
-        ColorExtensions.Create("#5da9e6"),
-        ColorExtensions.Create("#7f9fdf"),
-        ColorExtensions.Create("#6765e6"),
-        ColorExtensions.Create("#624cd9"),
+        ColorExtensions.Create("#35a5ff"),
+        ColorExtensions.Create("#4281ff"),
+        ColorExtensions.Create("#4d4aff"),
+        ColorExtensions.Create("#5839ff"),
         ColorExtensions.Create("#974cd9")
     };
 

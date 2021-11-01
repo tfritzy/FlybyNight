@@ -15,6 +15,7 @@ public class Moon : MonoBehaviour
         moonRenderer = this.GetComponent<SpriteRenderer>();
         pos = this.transform.position;
         xOffset = this.transform.position.x - Managers.Camera.transform.position.x;
+        SetColor();
     }
 
     private float TIME_BETWEEN_COLOR_UPDATES = .3f;
@@ -30,6 +31,11 @@ public class Moon : MonoBehaviour
         }
         lastColorUpdateTime = Time.time;
 
+        SetColor();
+    }
+
+    private void SetColor()
+    {
         Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
         foreach (SpriteRenderer renderer in Sky)
         {

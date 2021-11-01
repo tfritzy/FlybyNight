@@ -41,19 +41,19 @@ public static class Managers
         }
     }
 
-    // private static FireworkShooter fireworkShooter;
-    // public static FireworkShooter FireworkShooter
-    // {
-    //     get
-    //     {
-    //         if (fireworkShooter == null)
-    //         {
-    //             fireworkShooter = GameObject.Find("FireworkShooter").GetComponent<FireworkShooter>();
-    //         }
+    private static FireworkShooter fireworkShooter;
+    public static FireworkShooter FireworkShooter
+    {
+        get
+        {
+            if (fireworkShooter == null)
+            {
+                fireworkShooter = GameObject.Find("FireworkShooter").GetComponent<FireworkShooter>();
+            }
 
-    //         return fireworkShooter;
-    //     }
-    // }
+            return fireworkShooter;
+        }
+    }
 
     private static GridManager gridManager;
     public static GridManager GridManager
