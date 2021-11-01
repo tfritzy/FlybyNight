@@ -105,6 +105,7 @@ public class Gem : MonoBehaviour
             CollectionEffect.transform.SetParent(null);
             isCollected = true;
             Destroy(this.gameObject);
+            Destroy(CollectionEffect, 10f);
         }
     }
 
