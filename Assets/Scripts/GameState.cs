@@ -27,12 +27,12 @@ public static class GameState
     private static readonly string saveFilePath = Application.persistentDataPath + "/playerData.json";
     public static void Load()
     {
-        // Player = FileEncryptor.ReadFile(saveFilePath);
+        Player = FileEncryptor.ReadFile(saveFilePath);
         Player = new PlayerData();
     }
 
     public static async Task Save()
     {
-        // await FileEncryptor.WriteFile(saveFilePath, Player);
+        await FileEncryptor.WriteFile(saveFilePath, Player);
     }
 }
