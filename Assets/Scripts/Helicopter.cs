@@ -81,6 +81,9 @@ public class Helicopter : MonoBehaviour
         Managers.UIManager.SetUIForHelicopterHovering();
         this.State = HelicopterState.Hovering;
         this.GetComponent<TrailRenderer>().Clear();
+        this.bladesAngularVelocity = MIN_BLADE_A_VEL;
+        this.targetChoppingPitch = driftingTargetPitch;
+        this.choppingSound.pitch = this.targetChoppingPitch;
 
         foreach (SpriteRenderer part in this.bodyParts)
         {
@@ -111,7 +114,7 @@ public class Helicopter : MonoBehaviour
     async void Update()
     {
         CheckCollision();
-        // AdjustChoppingPitch();
+        AdjustChoppingPitch();
         SpinBlades();
         await SaveIfNeeded();
     }
