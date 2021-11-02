@@ -22,6 +22,8 @@ public class FadeToBlack : MonoBehaviour
     void Start()
     {
         image = this.GetComponent<Image>();
+        image.color = Color.black;
+        this.State = TransitionState.Lightening;
     }
 
     void Update()

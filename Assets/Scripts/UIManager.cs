@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        SetUIColor();
+        UpdateColorLoop();
     }
 
     public void SetUIForHelicopterFlying()
@@ -61,6 +61,7 @@ public class UIManager : MonoBehaviour
         SettingsButton.SetActive(true);
         ToggleDifficultyButton.SetActive(true);
         LeaderboardButton.SetActive(true);
+        UpdateColors();
         CloseSettings();
     }
 
@@ -145,7 +146,7 @@ public class UIManager : MonoBehaviour
 
     private float lastColorUpdateTime;
     private const float TIME_BETWEEN_COLOR_UPDATES = .5f;
-    private void SetUIColor()
+    private void UpdateColorLoop()
     {
         if (Time.time < lastColorUpdateTime + TIME_BETWEEN_COLOR_UPDATES)
         {
@@ -154,6 +155,11 @@ public class UIManager : MonoBehaviour
 
         lastColorUpdateTime = Time.time;
 
+        UpdateColors();
+    }
+
+    private void UpdateColors()
+    {
         Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
 
         foreach (Image image in colorUIImages)

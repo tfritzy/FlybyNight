@@ -43,6 +43,8 @@ public static class FileEncryptor
 
             dataStream.Close();
 
+            Debug.Log(text);
+
             // Deserialize the JSON data 
             //  into a pattern matching the GameData class.
             return JsonConvert.DeserializeObject<PlayerData>(text);
@@ -57,7 +59,7 @@ public static class FileEncryptor
         Aes iAes = Aes.Create();
 
         // Create a FileStream for creating files.
-        FileStream dataStream = new FileStream(path, FileMode.OpenOrCreate);
+        FileStream dataStream = new FileStream(path + "_temp", FileMode.OpenOrCreate);
 
         // Save the new generated IV.
         byte[] inputIV = iAes.IV;
@@ -76,6 +78,7 @@ public static class FileEncryptor
 
         // Serialize the object into JSON and save string.
         string jsonString = JsonConvert.SerializeObject(data);
+        Debug.Log(jsonString);
 
         // Write to the innermost stream (which will encrypt).
         await sWriter.WriteAsync(jsonString);
@@ -88,5 +91,8 @@ public static class FileEncryptor
 
         // Close FileStream.
         dataStream.Close();
+
+        File.Delete(path);
+        File.Move(path + "_temp", path);
     }
 }

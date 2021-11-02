@@ -6,7 +6,6 @@ public static class Constants
     public const int TOP_HEIGHT = WINDOW_BLOCK_HEIGHT / 2;
     public const int BOTTOM_HEIGHT = -WINDOW_BLOCK_HEIGHT / 2 - 1;
     public const int CAVE_RADIUS = 7;
-    public const int DISTANCE_BETWEEN_GEMS = 75;
     public const int DISTANCE_BETWEEN_SAVES = 200;
 
     public static class Tags

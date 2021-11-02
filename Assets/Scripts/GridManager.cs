@@ -81,8 +81,7 @@ public class GridManager : MonoBehaviour
 
     private int GetHelicopterBlockPos()
     {
-        // return (int)(Managers.Helicopter.transform.position.x / Constants.BLOCK_WIDTH);
-        return (int)Camera.main.transform.position.x;
+        return Managers.Helicopter.Distance;
     }
 
     public void ResetGrid()
@@ -151,9 +150,9 @@ public class GridManager : MonoBehaviour
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):
-                return 25;
-            case (DifficultySetting.Intense):
                 return 20;
+            case (DifficultySetting.Intense):
+                return 10;
             default:
                 throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
         }

@@ -83,6 +83,20 @@ public static class Managers
         }
     }
 
+    private static Backdrop backdrop;
+    public static Backdrop Backdrop
+    {
+        get
+        {
+            if (backdrop == null)
+            {
+                backdrop = GameObject.Find("Backdrop").GetComponent<Backdrop>();
+            }
+
+            return backdrop;
+        }
+    }
+
     // private static GPGManager gpgManager;
     // public static GPGManager GPGManager
     // {

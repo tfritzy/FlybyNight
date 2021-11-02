@@ -8,11 +8,11 @@ public class Helicopter : MonoBehaviour
     public HelicopterState State;
     public GameObject Blades;
     public GameObject ExplosionPrefab;
-    public int Distance => (int)(this.transform.position.x / Constants.BLOCK_WIDTH) + 1;
-    private static readonly Vector3 UP_FORCE = new Vector3(0, 25, 0);
+    public int Distance => (int)(this.transform.position.x / Constants.BLOCK_WIDTH);
+    private static readonly Vector3 UP_FORCE = new Vector3(0, 35, 0);
     private static readonly Vector3 GRAVITY_FORCE = new Vector3(0, -12.5f, 0);
 
-    private static readonly Vector3 START_VELOCITY = new Vector3(8, 5, 0);
+    private static readonly Vector3 START_VELOCITY = new Vector3(7, 3, 0);
     private Rigidbody2D rb;
     private SpriteRenderer[] bodyParts;
 
@@ -84,6 +84,7 @@ public class Helicopter : MonoBehaviour
         this.bladesAngularVelocity = MIN_BLADE_A_VEL;
         this.targetChoppingPitch = driftingTargetPitch;
         this.choppingSound.pitch = this.targetChoppingPitch;
+        Managers.Backdrop.SetColor();
 
         foreach (SpriteRenderer part in this.bodyParts)
         {

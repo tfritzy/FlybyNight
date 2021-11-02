@@ -28,7 +28,6 @@ public static class GameState
     public static void Load()
     {
         Player = FileEncryptor.ReadFile(saveFilePath);
-        Player = new PlayerData();
     }
 
     public static async Task Save()

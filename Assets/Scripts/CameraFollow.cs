@@ -14,7 +14,7 @@ public class CameraFollow : MonoBehaviour
     private System.Random random;
     private float dampingSpeed = 2f;
     private Vector3 initialShakePos;
-    private int MIN_TELEPORT_DISTANCE = 75;
+    private int MIN_TELEPORT_DISTANCE = 40;
 
     private Vector3 targetPos => MutedY(ObjectToTrack.transform.position) - Offset;
 
@@ -57,6 +57,7 @@ public class CameraFollow : MonoBehaviour
     public void ForceMove()
     {
         this.transform.position = targetPos;
+        this.GetComponent<InterpolatedTransform>().ForgetPreviousTransforms();
     }
 
     private void ExactTrack()

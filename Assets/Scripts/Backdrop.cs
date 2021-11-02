@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Moon : MonoBehaviour
+public class Backdrop : MonoBehaviour
 {
     public SpriteRenderer[] Sky;
 
@@ -34,7 +34,7 @@ public class Moon : MonoBehaviour
         SetColor();
     }
 
-    private void SetColor()
+    public void SetColor()
     {
         Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
         foreach (SpriteRenderer renderer in Sky)
