@@ -9,21 +9,26 @@ ModelImporter:
     100006: Point
     100008: Point.001
     100010: Sphere
+    100012: Landscape.000
     400000: //RootNode
     400002: Camera
     400004: Landscape.005
     400006: Point
     400008: Point.001
     400010: Sphere
+    400012: Landscape.000
     2000000: Camera
     2100000: Material.002
     2100002: No Name
     2300000: Landscape.005
     2300002: Sphere
+    2300004: Landscape.000
     3300000: Landscape.005
     3300002: Sphere
+    3300004: Landscape.000
     4300000: Sphere
     4300002: Landscape.005
+    4300004: Landscape.000
     10800000: Point
     10800002: Point.001
   externalObjects: {}
