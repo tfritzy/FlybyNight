@@ -5,7 +5,7 @@ namespace LeTai.Asset.TranslucentImage.Demo
     [RequireComponent(typeof(TranslucentImageSource))]
     public class ChangeBlurConfig : MonoBehaviour
     {
-        TranslucentImageSource    source;
+        TranslucentImageSource source;
         public TranslucentImage[] translucentImages;
 
         // Use this for initialization
@@ -17,7 +17,7 @@ namespace LeTai.Asset.TranslucentImage.Demo
         public void ChangeBlurStrength(float value)
         {
             //source.BlurRadius = value;
-            ((ScalableBlurConfig) source.BlurConfig).Strength = value;
+            ((ScalableBlurConfig)source.BlurConfig).Strength = value;
         }
 
         public void SetUpdateRate(float value)
@@ -34,13 +34,13 @@ namespace LeTai.Asset.TranslucentImage.Demo
         public void ChangeBlurSize(float value)
         {
             //source.BlurRadius = value;
-            ((ScalableBlurConfig) source.BlurConfig).Radius = value;
+            ((ScalableBlurConfig)source.BlurConfig).Radius = value;
         }
 
         public void ChangeIteration(float value)
         {
-//            source.Iteration = Mathf.RoundToInt(value);
-            ((ScalableBlurConfig) source.BlurConfig).Iteration = Mathf.RoundToInt(value);
+            //            source.Iteration = Mathf.RoundToInt(value);
+            ((ScalableBlurConfig)source.BlurConfig).Iteration = Mathf.RoundToInt(value);
         }
 
         public void ChangeDownsample(float value)

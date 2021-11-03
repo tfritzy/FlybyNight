@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     {
         FindColorDependentUI();
         SetUIForHelicopterHovering();
-        CloseSettings();
+        InitSettingsWindow();
         SetupAudioSettingsButtons();
         FormatDifficultyButton();
         SetGemCount(GameState.Player.GemCount);
@@ -65,14 +65,22 @@ public class UIManager : MonoBehaviour
         CloseSettings();
     }
 
+    private void InitSettingsWindow()
+    {
+        SettingsWindow.gameObject.SetActive(false);
+    }
+
     public void OpenSettings()
     {
-        SettingsWindow.SetActive(true);
+        Managers.Camera.GetComponent<BlurManager>().IncreaseBlur();
+        SettingsWindow.gameObject.SetActive(true);
+        SettingsWindow.GetComponent<Animator>().SetBool("IsOpen", true);
     }
 
     public void CloseSettings()
     {
-        SettingsWindow.SetActive(false);
+        Managers.Camera.GetComponent<BlurManager>().DecreaseBlur();
+        SettingsWindow.GetComponent<Animator>().SetBool("IsOpen", false);
     }
 
     private void SetupAudioSettingsButtons()

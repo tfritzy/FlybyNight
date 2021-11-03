@@ -5,19 +5,17 @@ namespace LeTai.Asset.TranslucentImage
     [CreateAssetMenu(fileName = "New Scalable Blur Config", menuName = "Translucent Image/ Scalable Blur Config")]
     public class ScalableBlurConfig : BlurConfig
     {
-        [SerializeField] float radius    = 4;
-        [SerializeField] int   iteration = 4;
-        [SerializeField] int   maxDepth  = 6;
+        [SerializeField] float radius = 4;
+        [SerializeField] int iteration = 4;
+        [SerializeField] int maxDepth = 6;
         [SerializeField] float strength;
 
         /// <summary>
         /// Distance between the base texel and the texel to be sampled.
         /// </summary>
-        public float Radius
-        {
-            get { return radius; }
-            set { radius = Mathf.Max(0, value); }
-        }
+        [SerializeField]
+        [Range(0, 5)]
+        public float Radius;
 
         /// <summary>
         /// Half the number of time to process the image. It is half because the real number of iteration must alway be even. Using half also make calculation simpler
