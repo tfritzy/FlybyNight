@@ -17,6 +17,7 @@ public class GridManager : MonoBehaviour
     private System.Random random;
     private Vector2Int renderedRanges;
     private List<GameObject> SaveMarkers;
+    private List<GameObject> InstantiatedGems;
     private static readonly Color[] CasualColors =
     {
         ColorExtensions.Create("#53d52e"),
@@ -57,6 +58,7 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
+        InstantiatedGems = new List<GameObject>();
         SaveMarkers = new List<GameObject>();
         random = new System.Random(0);
         InitiallySetupTiles();
@@ -89,6 +91,11 @@ public class GridManager : MonoBehaviour
         foreach (GameObject marker in SaveMarkers)
         {
             Destroy(marker);
+        }
+
+        foreach (GameObject gem in InstantiatedGems)
+        {
+            Destroy(gem);
         }
 
         InitiallySetupTiles();
@@ -230,7 +237,7 @@ public class GridManager : MonoBehaviour
         Vector3[] gemPositions = GetGemPositions(obstacleXPos, gemCount);
         foreach (Vector3 pos in gemPositions)
         {
-            GameObject gem = Instantiate(GemPrefab, pos, new Quaternion());
+            GameObject gem = Instantiate(GemPrefab, pos, new Quaternion(), this.transform);
             if (pos == gemPositions[gemPositions.Length / 2])
             {
                 gem.GetComponent<Gem>().SetTier(random.Next(0, 5) == 0 ? Gem.GemTier.High : Gem.GemTier.Mid);
@@ -239,6 +246,8 @@ public class GridManager : MonoBehaviour
             {
                 gem.GetComponent<Gem>().SetTier(Gem.GemTier.Low);
             }
+
+            InstantiatedGems.Add(gem);
         }
 
         float caveSlope = GetCaveMidAtPos(obstacleXPos) - GetCaveMidAtPos(obstacleXPos - 10);

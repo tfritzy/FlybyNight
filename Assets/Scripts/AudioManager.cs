@@ -9,8 +9,6 @@ public class AudioManager : MonoBehaviour
 
     private const string SFX_GROUP = "SFXVol";
     private const string MUSIC_GROUP = "MusicVol";
-    public const float AUDIBLE = 0f;
-    public const float MUTED = -80f;
 
     public void SetMusicLevel(float value)
     {
