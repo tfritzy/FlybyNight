@@ -2822,7 +2822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tilemap: {fileID: 1723810107}
-  BaseTile: {fileID: 11400000, guid: 566e01af761a1084ca01303a67423ef3, type: 2}
+  BaseTile: {fileID: 11400000, guid: 378c9a429bb5a4148baf64c2e6160526, type: 2}
   SaveMarker: {fileID: 2142279392158972942, guid: 185e5d24c966cfa4fb052d1f9c483510,
     type: 3}
   ObstaclePerlinScale: 0
