@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     public Slider SFXSlider;
     public Slider MusicSlider;
     public GameObject ToggleDifficultyButton;
-    // public AudioManager AudioManager;
+    public AudioManager AudioManager;
     public GameObject LeaderboardButton;
     public Transform FPSSelectGroup;
 
@@ -100,14 +100,12 @@ public class UIManager : MonoBehaviour
 
     public void SetSFXLevel(float value)
     {
-        // AudioManager.ToggleSFX();
-        SetupAudioSettingsButtons();
+        AudioManager.SetSFXLevel(value);
     }
 
     public void SetMusicLevel(float value)
     {
-        // AudioManager.ToggleMusic();
-        SetupAudioSettingsButtons();
+        AudioManager.SetMusicLevel(value);
     }
 
     public void SetGemCount(int value)

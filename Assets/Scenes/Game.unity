@@ -894,6 +894,7 @@ MonoBehaviour:
   SFXSlider: {fileID: 1782950429}
   MusicSlider: {fileID: 399531851}
   ToggleDifficultyButton: {fileID: 552049034}
+  AudioManager: {fileID: 431018149}
   LeaderboardButton: {fileID: 1115495971}
   FPSSelectGroup: {fileID: 1894629248}
 --- !u!114 &240793046
@@ -1183,10 +1184,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 2105610075}
   m_HandleRect: {fileID: 2065955197}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.547
+  m_Value: 0.000001
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1315,6 +1316,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410452003}
   m_CullTransparentMesh: 0
+--- !u!1 &431018147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431018148}
+  - component: {fileID: 431018149}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431018148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431018147}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2110548506}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &431018149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431018147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c5b1004bff6424fa3af910803b26b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mixer: {fileID: 24100000, guid: 99cbf38ea9bf57e419c422d1b5e59e18, type: 2}
 --- !u!1 &463504382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectToTrack: {fileID: 1741335145}
   Offset: {x: -6, y: 0, z: 5}
-  ShakeAmount: 0.5
+  ShakeAmount: 1
   FadeToBlackSprite: {fileID: 1840810317}
   TrackingState: 0
 --- !u!114 &519420034
@@ -4743,10 +4788,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 2123797191}
   m_HandleRect: {fileID: 1756006525}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.000001
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5850,6 +5895,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1987294147}
+  - {fileID: 431018148}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
