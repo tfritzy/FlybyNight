@@ -157,9 +157,9 @@ public class GridManager : MonoBehaviour
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):
-                return 20;
+                return 40;
             case (DifficultySetting.Intense):
-                return 10;
+                return 20;
             default:
                 throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
         }
@@ -170,9 +170,9 @@ public class GridManager : MonoBehaviour
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):
-                return 2;
-            case (DifficultySetting.Intense):
                 return 4;
+            case (DifficultySetting.Intense):
+                return 8;
             default:
                 throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
         }
@@ -323,7 +323,11 @@ public class GridManager : MonoBehaviour
 
         for (int y = centerHeight - GetObstacleHeight() / 2; y < centerHeight + GetObstacleHeight() / 2; y++)
         {
-            SetTile(x, y, color);
+            for (int xi = x - 1; xi <= x + 2; xi++)
+            {
+                SetTile(xi, y, color);
+            }
+
         }
     }
 
@@ -350,7 +354,11 @@ public class GridManager : MonoBehaviour
         {
             for (int xi = x - obstacleWidth; xi < x + obstacleWidth; xi++)
             {
-                SetTile(xi, centerHeight + Constants.BOTTOM_HEIGHT + slabIndex * distanceBetweenSlabs, color);
+                int yPos = centerHeight + Constants.BOTTOM_HEIGHT + slabIndex * distanceBetweenSlabs;
+                for (int y = yPos; y <= yPos + 1; y++)
+                {
+                    SetTile(xi, y, color);
+                }
             }
         }
     }
@@ -361,8 +369,12 @@ public class GridManager : MonoBehaviour
         Vector3Int pos = new Vector3Int(x, 0, 0);
         for (int y = CenterGapObstacleHalfHeight(); y < Constants.TOP_HEIGHT; y++)
         {
-            SetTile(x, y, color);
-            SetTile(x, -y, color);
+            for (int xi = x - 1; xi <= x + 2; xi++)
+            {
+                Debug.Log(xi);
+                SetTile(xi, y, color);
+                SetTile(xi, -y, color);
+            }
         }
     }
 
@@ -415,14 +427,14 @@ public class GridManager : MonoBehaviour
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         Tilemap.SetTile(pos, BaseTile);
-        Tilemap.SetColor(pos, GetColorForColumn(x));
+        // Tilemap.SetColor(pos, GetColorForColumn(x));
     }
 
     private void SetTile(int x, int y, Color color)
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         Tilemap.SetTile(pos, BaseTile);
-        Tilemap.SetColor(pos, color);
+        // Tilemap.SetColor(pos, color);
     }
 
     public static int GetCaveMidAtPos(int x)

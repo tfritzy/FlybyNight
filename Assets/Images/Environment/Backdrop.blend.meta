@@ -10,6 +10,23 @@ ModelImporter:
     100008: Point.001
     100010: Sphere
     100012: Landscape.000
+    100014: Cube.006
+    100016: Empty
+    100018: Grid
+    100020: Grid.001
+    100022: Grid.002
+    100024: Grid.003
+    100026: Grid.004
+    100028: Grid.005
+    100030: Grid.006
+    100032: Grid.007
+    100034: Grid.008
+    100036: Grid.009
+    100038: Grid.010
+    100040: Grid.011
+    100042: Grid.012
+    100044: Sun
+    100046: Sun.001
     400000: //RootNode
     400002: Camera
     400004: Landscape.005
@@ -17,20 +34,84 @@ ModelImporter:
     400008: Point.001
     400010: Sphere
     400012: Landscape.000
+    400014: Cube.006
+    400016: Empty
+    400018: Grid
+    400020: Grid.001
+    400022: Grid.002
+    400024: Grid.003
+    400026: Grid.004
+    400028: Grid.005
+    400030: Grid.006
+    400032: Grid.007
+    400034: Grid.008
+    400036: Grid.009
+    400038: Grid.010
+    400040: Grid.011
+    400042: Grid.012
+    400044: Sun
+    400046: Sun.001
     2000000: Camera
     2100000: Material.002
     2100002: No Name
+    2100004: Material.008
+    2100006: Material.007
     2300000: Landscape.005
     2300002: Sphere
     2300004: Landscape.000
+    2300006: Cube.006
+    2300008: Grid
+    2300010: Grid.001
+    2300012: Grid.002
+    2300014: Grid.003
+    2300016: Grid.004
+    2300018: Grid.005
+    2300020: Grid.006
+    2300022: Grid.007
+    2300024: Grid.008
+    2300026: Grid.009
+    2300028: Grid.010
+    2300030: Grid.011
+    2300032: Grid.012
     3300000: Landscape.005
     3300002: Sphere
     3300004: Landscape.000
+    3300006: Cube.006
+    3300008: Grid
+    3300010: Grid.001
+    3300012: Grid.002
+    3300014: Grid.003
+    3300016: Grid.004
+    3300018: Grid.005
+    3300020: Grid.006
+    3300022: Grid.007
+    3300024: Grid.008
+    3300026: Grid.009
+    3300028: Grid.010
+    3300030: Grid.011
+    3300032: Grid.012
     4300000: Sphere
     4300002: Landscape.005
     4300004: Landscape.000
+    4300006: Cube.006
+    4300008: Grid
+    4300010: Grid.001
+    4300012: Grid.002
+    4300014: Grid.003
+    4300016: Grid.004
+    4300018: Grid.005
+    4300020: Grid.006
+    4300022: Grid.007
+    4300024: Grid.008
+    4300026: Grid.009
+    4300028: Grid.010
+    4300030: Grid.011
+    4300032: Grid.012
     10800000: Point
     10800002: Point.001
+    10800004: Sun
+    10800006: Sun.001
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1

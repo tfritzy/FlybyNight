@@ -42,6 +42,8 @@ public class Backdrop : MonoBehaviour
             renderer.color = color;
         }
 
+        Managers.GridManager.Tilemap.color = color;
+
         moonRenderer.color = ColorExtensions.Lighten(color, .5f);
     }
 }

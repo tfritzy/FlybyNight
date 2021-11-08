@@ -2790,7 +2790,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140817380}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 0.5, y: 0.5, z: 0.5}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -2822,7 +2822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tilemap: {fileID: 1723810107}
-  BaseTile: {fileID: 11400000, guid: 378c9a429bb5a4148baf64c2e6160526, type: 2}
+  BaseTile: {fileID: 11400000, guid: 9ec10a2cf5b490141aedfc77d0265c6b, type: 2}
   SaveMarker: {fileID: 2142279392158972942, guid: 185e5d24c966cfa4fb052d1f9c483510,
     type: 3}
   ObstaclePerlinScale: 0
@@ -4301,14 +4301,50 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 1.1178095e-17
+      e01: NaN
+      e02: 8.785626e-39
+      e03: 0
+      e10: 0
+      e11: NaN
+      e12: 0
+      e13: 1.875
+      e20: 7e-45
+      e21: 8.785704e-39
+      e22: 1.21807e-24
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 0
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 1e-45, g: 1e-45, b: 1e-45, a: 1e-45}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: -2, z: 0}
-  m_Size: {x: 6, y: 2, z: 1}
+  m_Origin: {x: -4, y: -18, z: 0}
+  m_Size: {x: 10, y: 18, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
