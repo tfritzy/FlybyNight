@@ -72,7 +72,7 @@ public class GridManager : MonoBehaviour
             SpawnTilesForColumn(highestRenderedBlock);
             // SpawnGemIfApplicable(highestRenderedBlock);
             SpawnSaveMarkerIfApplicable(highestRenderedBlock - 1);
-            SpawnObstacle(highestRenderedBlock);
+            SpawnObstacle(highestRenderedBlock - 3);
 
             if (highestRenderedBlock / Constants.DISTANCE_BETWEEN_SAVES > renderedRanges.y)
             {
@@ -113,7 +113,6 @@ public class GridManager : MonoBehaviour
 
     private void SpawnTilesForColumn(int x)
     {
-        Color color = GetColorForColumn(x);
         int centerHeight = GetCaveMidAtPos(x);
         for (int y = Constants.BOTTOM_HEIGHT - 1; y <= Constants.TOP_HEIGHT + 1; y++)
         {
@@ -143,13 +142,13 @@ public class GridManager : MonoBehaviour
                 continue;
             }
 
-            SetTile(x, y, color);
+            SetTile(x, y);
         }
 
-        SetTile(x, Constants.BOTTOM_HEIGHT, color);
-        SetTile(x, Constants.BOTTOM_HEIGHT + 1, color);
-        SetTile(x, Constants.TOP_HEIGHT, color);
-        SetTile(x, Constants.TOP_HEIGHT - 1, color);
+        SetTile(x, Constants.BOTTOM_HEIGHT);
+        SetTile(x, Constants.BOTTOM_HEIGHT + 1);
+        SetTile(x, Constants.TOP_HEIGHT);
+        SetTile(x, Constants.TOP_HEIGHT - 1);
     }
 
     private static int GetDistanceBetweenObstacles()
@@ -157,9 +156,9 @@ public class GridManager : MonoBehaviour
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):
-                return 40;
+                return 50;
             case (DifficultySetting.Intense):
-                return 20;
+                return 40;
             default:
                 throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
         }
@@ -318,16 +317,14 @@ public class GridManager : MonoBehaviour
 
     private void SpawnVerticalBarObstacle(int x)
     {
-        Color color = GetColorForColumn(x);
         int centerHeight = GetCaveMidAtPos(x) + Random.Range(-1, 1);
 
         for (int y = centerHeight - GetObstacleHeight() / 2; y < centerHeight + GetObstacleHeight() / 2; y++)
         {
-            for (int xi = x - 1; xi <= x + 2; xi++)
+            for (int xi = x - 1; xi <= x + 1; xi++)
             {
-                SetTile(xi, y, color);
+                SetTile(xi, y);
             }
-
         }
     }
 
@@ -346,18 +343,17 @@ public class GridManager : MonoBehaviour
 
     private void SpawnHorizontalSlabs(int x)
     {
-        Color color = GetColorForColumn(x);
         int centerHeight = GetCaveMidAtPos(x);
         int obstacleWidth = GetObstacleHeight();
         int distanceBetweenSlabs = (Constants.CAVE_RADIUS * 2) / (GetSlabCount() + 1);
         for (int slabIndex = 0; slabIndex < GetSlabCount(); slabIndex++)
         {
-            for (int xi = x - obstacleWidth; xi < x + obstacleWidth; xi++)
+            for (int xi = x - obstacleWidth / 2; xi < x + obstacleWidth; xi++)
             {
                 int yPos = centerHeight + Constants.BOTTOM_HEIGHT + slabIndex * distanceBetweenSlabs;
                 for (int y = yPos; y <= yPos + 1; y++)
                 {
-                    SetTile(xi, y, color);
+                    SetTile(xi, y);
                 }
             }
         }
@@ -365,15 +361,13 @@ public class GridManager : MonoBehaviour
 
     private void SpawnCenterGapObstacle(int x)
     {
-        Color color = GetColorForColumn(x);
         Vector3Int pos = new Vector3Int(x, 0, 0);
         for (int y = CenterGapObstacleHalfHeight(); y < Constants.TOP_HEIGHT; y++)
         {
-            for (int xi = x - 1; xi <= x + 2; xi++)
+            for (int xi = x - 1; xi <= x + 1; xi++)
             {
-                Debug.Log(xi);
-                SetTile(xi, y, color);
-                SetTile(xi, -y, color);
+                SetTile(xi, y);
+                SetTile(xi, -y);
             }
         }
     }
@@ -427,14 +421,6 @@ public class GridManager : MonoBehaviour
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         Tilemap.SetTile(pos, BaseTile);
-        // Tilemap.SetColor(pos, GetColorForColumn(x));
-    }
-
-    private void SetTile(int x, int y, Color color)
-    {
-        Vector3Int pos = new Vector3Int(x, y, 0);
-        Tilemap.SetTile(pos, BaseTile);
-        // Tilemap.SetColor(pos, color);
     }
 
     public static int GetCaveMidAtPos(int x)

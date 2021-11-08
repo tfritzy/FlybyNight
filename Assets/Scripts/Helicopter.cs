@@ -9,7 +9,7 @@ public class Helicopter : MonoBehaviour
     public GameObject Blades;
     public GameObject ExplosionPrefab;
     public int Distance => (int)(this.transform.position.x / Constants.BLOCK_WIDTH);
-    private static readonly Vector3 UP_FORCE = new Vector3(0, 30, 0);
+    private static readonly Vector3 UP_FORCE = new Vector3(0, 25, 0);
     private static readonly Vector3 GRAVITY_FORCE = new Vector3(0, -12.5f, 0);
 
     private static readonly Vector3 START_VELOCITY = new Vector3(7, 3, 0);
