@@ -54,6 +54,7 @@ public class GridManager : MonoBehaviour
 
     void Update()
     {
+        Debug.Log($"While from {highestRenderedBlock} to {GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2}");
         while (highestRenderedBlock < GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2)
         {
             highestRenderedBlock += 1;
@@ -89,14 +90,33 @@ public class GridManager : MonoBehaviour
         InitiallySetupTiles();
     }
 
+    public void ResetGems()
+    {
+        foreach (GameObject marker in SaveMarkers)
+        {
+            Destroy(marker);
+        }
+
+        foreach (GameObject gem in InstantiatedGems)
+        {
+            Destroy(gem);
+        }
+
+        for (int i = GetHelicopterBlockPos(); i < GetHelicopterBlockPos() + Constants.DISTANCE_BETWEEN_SAVES; i++)
+        {
+            SpawnGemsForObstacle(i);
+        }
+    }
+
     private void InitiallySetupTiles()
     {
+        Debug.Log($"Initially setting up from {GetHelicopterBlockPos() - Constants.NUM_COLUMNS_RENDERED / 2} to {GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2}");
         for (int i = GetHelicopterBlockPos() - Constants.NUM_COLUMNS_RENDERED / 2; i < GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2; i++)
         {
             SpawnTilesForColumn(i);
         }
 
-        this.highestRenderedBlock = GetHelicopterBlockPos() - Constants.NUM_COLUMNS_RENDERED / 2;
+        this.highestRenderedBlock = GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2;
     }
 
     private void SpawnTilesForColumn(int x)
@@ -217,10 +237,10 @@ public class GridManager : MonoBehaviour
     private const int DIST_BETWEEN_GEMS = 3;
     private void SpawnGemsForObstacle(int obstacleXPos)
     {
-        // if (obstacleXPos % 3 != 0)
-        // {
-        //     return;
-        // }
+        if (obstacleXPos % GetDistanceBetweenObstacles() != 0 || obstacleXPos <= 0)
+        {
+            return;
+        }
 
         Debug.Log("Spawning gem");
 

@@ -46,7 +46,7 @@ public class Helicopter : MonoBehaviour
         Dead,
     }
 
-    void Start()
+    void Awake()
     {
         this.rb = GetComponent<Rigidbody2D>();
         this.isFrozen = true;
@@ -88,6 +88,7 @@ public class Helicopter : MonoBehaviour
         this.choppingSound.pitch = this.targetChoppingPitch;
         Managers.Backdrop.SetColor();
         this.Fuel = 1;
+        Managers.GridManager.ResetGems();
 
         foreach (SpriteRenderer part in this.bodyParts)
         {
