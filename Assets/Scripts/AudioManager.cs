@@ -12,8 +12,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusicLevel(float value)
     {
-        print(value);
-        print(Mixer.SetFloat(MUSIC_GROUP, Mathf.Log10(value) * 20));
+        Mixer.SetFloat(MUSIC_GROUP, Mathf.Log10(value) * 20);
     }
 
     public void SetSFXLevel(float value)

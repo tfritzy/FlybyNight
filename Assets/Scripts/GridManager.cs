@@ -18,8 +18,16 @@ public class GridManager : MonoBehaviour
     private Vector2Int renderedRanges;
     private List<GameObject> SaveMarkers;
     private List<GameObject> InstantiatedGems;
-    private static readonly Color[] CasualColors =
+    private static readonly Color[] colors =
     {
+        ColorExtensions.Create("#e23f44"),
+        ColorExtensions.Create("#e95e32"),
+        ColorExtensions.Create("#ef8c2a"),
+        ColorExtensions.Create("#efb824"),
+        ColorExtensions.Create("#f6e31f"),
+        ColorExtensions.Create("#e23fde"),
+        ColorExtensions.Create("#e23faf"),
+        ColorExtensions.Create("#e23f7a"),
         ColorExtensions.Create("#53d52e"),
         ColorExtensions.Create("#2ed549"),
         ColorExtensions.Create("#2ed589"),
@@ -31,29 +39,9 @@ public class GridManager : MonoBehaviour
         ColorExtensions.Create("#974cd9")
     };
 
-    private static readonly Color[] IntenseColors =
-    {
-        ColorExtensions.Create("#e23f44"),
-        ColorExtensions.Create("#e95e32"),
-        ColorExtensions.Create("#ef8c2a"),
-        ColorExtensions.Create("#efb824"),
-        ColorExtensions.Create("#f6e31f"),
-        ColorExtensions.Create("#e23fde"),
-        ColorExtensions.Create("#e23faf"),
-        ColorExtensions.Create("#e23f7a"),
-    };
-
     private static Color GetColor(int index)
     {
-        switch (GameState.Player.SelectedDifficulty)
-        {
-            case (DifficultySetting.Casual):
-                return CasualColors[index % CasualColors.Length];
-            case (DifficultySetting.Intense):
-                return IntenseColors[index % IntenseColors.Length];
-            default:
-                throw new System.Exception("Un-switched difficulty " + GameState.Player.SelectedDifficulty);
-        }
+        return colors[index % colors.Length];
     }
 
     void Start()
@@ -153,6 +141,8 @@ public class GridManager : MonoBehaviour
 
     private static int GetDistanceBetweenObstacles()
     {
+        return 30;
+
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):
@@ -227,34 +217,42 @@ public class GridManager : MonoBehaviour
     private const int DIST_BETWEEN_GEMS = 3;
     private void SpawnGemsForObstacle(int obstacleXPos)
     {
-        if (obstacleXPos % 3 != 0)
-        {
-            return;
-        }
+        // if (obstacleXPos % 3 != 0)
+        // {
+        //     return;
+        // }
 
-        int gemCount = Random.Range(0, 2) == 0 ? 3 : 5;
-        Vector3[] gemPositions = GetGemPositions(obstacleXPos, gemCount);
-        foreach (Vector3 pos in gemPositions)
-        {
-            GameObject gem = Instantiate(GemPrefab, pos, new Quaternion(), this.transform);
-            if (pos == gemPositions[gemPositions.Length / 2])
-            {
-                gem.GetComponent<Gem>().SetTier(random.Next(0, 5) == 0 ? Gem.GemTier.High : Gem.GemTier.Mid);
-            }
-            else
-            {
-                gem.GetComponent<Gem>().SetTier(Gem.GemTier.Low);
-            }
+        Debug.Log("Spawning gem");
 
-            InstantiatedGems.Add(gem);
-        }
+        Vector2 largestGap = findLargestGap(obstacleXPos);
+        float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f;
+        float xActualPos = obstacleXPos * Constants.BLOCK_WIDTH;
+        GameObject gem = Instantiate(GemPrefab, new Vector3(xActualPos, midPoint, 0), new Quaternion(), this.transform);
+        InstantiatedGems.Add(gem);
 
-        float caveSlope = GetCaveMidAtPos(obstacleXPos) - GetCaveMidAtPos(obstacleXPos - 10);
+        // int gemCount = Random.Range(0, 2) == 0 ? 3 : 5;
+        // Vector3[] gemPositions = GetGemPositions(obstacleXPos, gemCount);
+        // foreach (Vector3 pos in gemPositions)
+        // {
+        //     GameObject gem = Instantiate(GemPrefab, pos, new Quaternion(), this.transform);
+        //     if (pos == gemPositions[gemPositions.Length / 2])
+        //     {
+        //         gem.GetComponent<Gem>().SetTier(random.Next(0, 5) == 0 ? Gem.GemTier.High : Gem.GemTier.Mid);
+        //     }
+        //     else
+        //     {
+        //         gem.GetComponent<Gem>().SetTier(Gem.GemTier.Low);
+        //     }
+
+        //     InstantiatedGems.Add(gem);
+        // }
+
+        // float caveSlope = GetCaveMidAtPos(obstacleXPos) - GetCaveMidAtPos(obstacleXPos - 10);
     }
 
     private Vector3[] GetGemPositions(int xPos, int numGems)
     {
-        Vector2Int largestGap = findLargestGap(xPos);
+        Vector2 largestGap = findLargestGap(xPos);
         float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f;
         int gemEdgeDelta = (numGems / 2) * DIST_BETWEEN_GEMS;
         float farLeftYPos = GetCaveMidAtPos(xPos - DIST_BETWEEN_GEMS * 2) + Constants.BLOCK_WIDTH / 2f;
@@ -290,7 +288,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private Vector2Int findLargestGap(int x)
+    private Vector2 findLargestGap(int x)
     {
         Vector2Int largestGapBounds = new Vector2Int(Constants.BOTTOM_HEIGHT, Constants.BOTTOM_HEIGHT);
         Vector2Int currentGapBounds = new Vector2Int(Constants.BOTTOM_HEIGHT, Constants.BOTTOM_HEIGHT);
@@ -312,7 +310,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        return largestGapBounds;
+        return new Vector2(largestGapBounds.x * Constants.BLOCK_WIDTH, largestGapBounds.y * Constants.BLOCK_WIDTH);
     }
 
     private void SpawnVerticalBarObstacle(int x)
@@ -406,8 +404,8 @@ public class GridManager : MonoBehaviour
     {
         int index = (x / Constants.DISTANCE_BETWEEN_SAVES);
         return Color.Lerp(
-            GetColor(mod((index - 1), (CasualColors.Length - 1))),
-            GetColor(mod(index, (CasualColors.Length - 1))),
+            GetColor(mod((index - 1), (colors.Length - 1))),
+            GetColor(mod(index, (colors.Length - 1))),
             (float)(x % Constants.DISTANCE_BETWEEN_SAVES) / Constants.DISTANCE_BETWEEN_SAVES);
     }
 

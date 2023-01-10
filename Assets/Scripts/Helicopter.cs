@@ -11,10 +11,12 @@ public class Helicopter : MonoBehaviour
     public int Distance => (int)(this.transform.position.x / Constants.BLOCK_WIDTH);
     private static readonly Vector3 UP_FORCE = new Vector3(0, 25, 0);
     private static readonly Vector3 GRAVITY_FORCE = new Vector3(0, -12.5f, 0);
+    public float Fuel { get; private set; }
 
     private static readonly Vector3 START_VELOCITY = new Vector3(7, 3, 0);
     private Rigidbody2D rb;
     private SpriteRenderer[] bodyParts;
+    private const float FUEL_BURN_RATE_PERCENT_PER_S = .25f;
 
     // Blade variables
     private const float MAX_BLADE_A_VEL = 2000;
@@ -85,10 +87,21 @@ public class Helicopter : MonoBehaviour
         this.targetChoppingPitch = driftingTargetPitch;
         this.choppingSound.pitch = this.targetChoppingPitch;
         Managers.Backdrop.SetColor();
+        this.Fuel = 1;
 
         foreach (SpriteRenderer part in this.bodyParts)
         {
             part.gameObject.SetActive(true);
+        }
+    }
+
+    public void AddFuel(float amount)
+    {
+        this.Fuel += amount;
+
+        if (this.Fuel > 1f)
+        {
+            this.Fuel = 1f;
         }
     }
 
@@ -122,10 +135,16 @@ public class Helicopter : MonoBehaviour
 
     private void FlyUp()
     {
+        if (this.Fuel <= 0)
+        {
+            return;
+        }
+
         this.velocity += UP_FORCE * Time.deltaTime;
         this.targetChoppingPitch = actionTargetPitch;
         bladesAngularVelocity = Mathf.Min(MAX_BLADE_A_VEL, bladesAngularVelocity + Time.fixedDeltaTime * BLADE_A_VEL_ACCEL);
         this.transform.rotation = flyingUpRotation;
+        this.Fuel -= Time.deltaTime * FUEL_BURN_RATE_PERCENT_PER_S;
     }
 
     private void DriftDown()

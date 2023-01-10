@@ -80,9 +80,9 @@ public class Gem : MonoBehaviour
 
     public void SetTier(GemTier tier)
     {
-        this.color = GetColor(tier);
+        // this.color = GetColor(tier);
         this.Value = valueMap[this.color];
-        this.GetComponentInChildren<SpriteRenderer>().color = colorMap[this.color];
+        // this.GetComponentInChildren<SpriteRenderer>().color = colorMap[this.color];
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -95,10 +95,11 @@ public class Gem : MonoBehaviour
         if (other.CompareTag(Constants.Tags.Helicopter))
         {
             Collect();
+            Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
             foreach (ParticleSystem ps in CollectionEffect.GetComponentsInChildren<ParticleSystem>())
             {
                 var main = ps.main;
-                main.startColor = this.colorMap[this.color];
+                main.startColor = Color.white;
             }
 
             CollectionEffect.SetActive(true);
@@ -111,6 +112,6 @@ public class Gem : MonoBehaviour
 
     public void Collect()
     {
-        GameState.Player.GemCount += Value;
+        Managers.Helicopter.AddFuel(.33f);
     }
 }

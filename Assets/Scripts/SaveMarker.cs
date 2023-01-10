@@ -51,6 +51,7 @@ public class SaveMarker : MonoBehaviour
 
         if (col.CompareTag(Constants.Tags.Helicopter))
         {
+            Managers.Helicopter.AddFuel(1f);
             Managers.FireworkShooter.Fire();
             Helpers.TriggerAllParticleSystems(Fire.transform, true);
             source.Play();
