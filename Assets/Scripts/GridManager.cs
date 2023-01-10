@@ -44,17 +44,20 @@ public class GridManager : MonoBehaviour
         return colors[index % colors.Length];
     }
 
-    void Start()
+    void Awake()
     {
         InstantiatedGems = new List<GameObject>();
         SaveMarkers = new List<GameObject>();
         random = new System.Random(0);
+    }
+
+    void Start()
+    {
         InitiallySetupTiles();
     }
 
     void Update()
     {
-        Debug.Log($"While from {highestRenderedBlock} to {GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2}");
         while (highestRenderedBlock < GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2)
         {
             highestRenderedBlock += 1;
@@ -110,7 +113,6 @@ public class GridManager : MonoBehaviour
 
     private void InitiallySetupTiles()
     {
-        Debug.Log($"Initially setting up from {GetHelicopterBlockPos() - Constants.NUM_COLUMNS_RENDERED / 2} to {GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2}");
         for (int i = GetHelicopterBlockPos() - Constants.NUM_COLUMNS_RENDERED / 2; i < GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2; i++)
         {
             SpawnTilesForColumn(i);
@@ -145,6 +147,7 @@ public class GridManager : MonoBehaviour
 
             float distanceToMid = Mathf.Abs(y - centerHeight);
             perlinValue += distanceToMid * .08f;
+
             if (perlinValue < ObstaclePerlinCutoff)
             {
                 continue;
@@ -176,6 +179,8 @@ public class GridManager : MonoBehaviour
 
     private static int GetObstacleHeight()
     {
+        return 6;
+
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):
@@ -189,6 +194,7 @@ public class GridManager : MonoBehaviour
 
     private static int CenterGapObstacleHalfHeight()
     {
+        return 3;
         switch (GameState.Player.SelectedDifficulty)
         {
             case (DifficultySetting.Casual):

@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     private List<Image> colorUIImages;
     private List<Text> colorUIText;
 
-    void Start()
+    void Awake()
     {
         FindColorDependentUI();
         SetUIForHelicopterHovering();
@@ -154,6 +154,11 @@ public class UIManager : MonoBehaviour
 
     private void UpdateColors()
     {
+        if (Managers.Helicopter == null)
+        {
+            return;
+        }
+
         Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
 
         foreach (Image image in colorUIImages)

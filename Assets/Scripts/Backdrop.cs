@@ -10,7 +10,7 @@ public class Backdrop : MonoBehaviour
     private Vector3 pos;
     private float xOffset;
 
-    void Start()
+    void Awake()
     {
         moonRenderer = this.GetComponent<SpriteRenderer>();
         pos = this.transform.position;
