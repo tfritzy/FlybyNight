@@ -210,7 +210,8 @@ public class Helicopter : MonoBehaviour
         {
             var go = GameObject.Instantiate(DeathPiece, this.transform.position, new Quaternion());
             go.transform.position += (Vector3)Random.insideUnitCircle * .25f;
-            go.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * 10f;
+            go.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * 20f;
+            Destroy(go, Random.Range(4f, 8f));
         }
     }
 

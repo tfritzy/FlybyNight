@@ -72,14 +72,14 @@ public class UIManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        Managers.Camera.GetComponent<BlurManager>().IncreaseBlur();
+        // Managers.Camera.GetComponent<BlurManager>().IncreaseBlur();
         SettingsWindow.gameObject.SetActive(true);
         SettingsWindow.GetComponent<Animator>().SetBool("IsOpen", true);
     }
 
     public void CloseSettings()
     {
-        Managers.Camera.GetComponent<BlurManager>().DecreaseBlur();
+        // Managers.Camera.GetComponent<BlurManager>().DecreaseBlur();
         SettingsWindow.GetComponent<Animator>().SetBool("IsOpen", false);
     }
 

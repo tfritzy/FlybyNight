@@ -43,6 +43,9 @@ public class Backdrop : MonoBehaviour
         }
 
         Managers.GridManager.Tilemap.color = color;
-        moonRenderer.color = color;
+
+        Color.RGBToHSV(color, out float h, out float s, out float v);
+
+        moonRenderer.color = Color.HSVToRGB(h, .2f, 1f);
     }
 }

@@ -46,6 +46,7 @@ public class GridManager : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
         InstantiatedGems = new List<GameObject>();
         SaveMarkers = new List<GameObject>();
         random = new System.Random(0);
