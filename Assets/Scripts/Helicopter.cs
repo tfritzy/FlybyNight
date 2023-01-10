@@ -8,6 +8,7 @@ public class Helicopter : MonoBehaviour
     public HelicopterState State;
     public GameObject Blades;
     public GameObject ExplosionPrefab;
+    public GameObject DeathPiece;
     public int Distance => (int)(this.transform.position.x / Constants.BLOCK_WIDTH);
     private static readonly Vector3 UP_FORCE = new Vector3(0, 25, 0);
     private static readonly Vector3 GRAVITY_FORCE = new Vector3(0, -12.5f, 0);
@@ -200,6 +201,17 @@ public class Helicopter : MonoBehaviour
         }
         GameState.Player.HighestDistanceUnlocked[GameState.Player.SelectedDifficulty] = Distance;
         needsToSave = true;
+        SpawnDeathObjects();
+    }
+
+    private void SpawnDeathObjects()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            var go = GameObject.Instantiate(DeathPiece, this.transform.position, new Quaternion());
+            go.transform.position += (Vector3)Random.insideUnitCircle * .25f;
+            go.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * 10f;
+        }
     }
 
     private async Task SaveIfNeeded()

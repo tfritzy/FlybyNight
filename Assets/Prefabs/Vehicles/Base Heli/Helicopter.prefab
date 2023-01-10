@@ -128,6 +128,8 @@ MonoBehaviour:
   State: 0
   Blades: {fileID: 8361595172327034181}
   ExplosionPrefab: {fileID: 0}
+  DeathPiece: {fileID: 1144354623740208813, guid: b4384d4dc8c714b4bb201924e1c69307,
+    type: 3}
 --- !u!1 &8361595172327034181
 GameObject:
   m_ObjectHideFlags: 0

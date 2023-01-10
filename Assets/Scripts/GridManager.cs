@@ -248,8 +248,6 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Spawning gem");
-
         Vector2 largestGap = findLargestGap(obstacleXPos);
         float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f;
         float xActualPos = obstacleXPos * Constants.BLOCK_WIDTH;
