@@ -153,11 +153,6 @@ public class UIManager : MonoBehaviour
 
     private void UpdateColors()
     {
-        if (Managers.Helicopter == null)
-        {
-            return;
-        }
-
         Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
 
         foreach (Image image in colorUIImages)

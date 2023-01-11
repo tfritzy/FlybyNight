@@ -51,7 +51,7 @@ public class BackgroundObject : MonoBehaviour
         {
             Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
             Color.RGBToHSV(color, out float h, out float s, out float v);
-            color = Color.HSVToRGB(h, s * .45f, v * .6f);
+            color = Color.HSVToRGB(h, s * .45f, v * .7f);
             spriteRenderer.color = color;
         }
     }

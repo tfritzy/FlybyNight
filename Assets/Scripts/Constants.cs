@@ -7,6 +7,7 @@ public static class Constants
     public const int BOTTOM_HEIGHT = -WINDOW_BLOCK_HEIGHT / 2 - 1;
     public const int CAVE_RADIUS = 12;
     public const int DISTANCE_BETWEEN_SAVES = 615;
+    public const int COLORS_PER_CYCLE = 16;
 
     public static class Tags
     {

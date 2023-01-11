@@ -458,11 +458,13 @@ public class GridManager : MonoBehaviour
 
     public static Color GetColorForColumn(int x)
     {
-        int index = (x / Constants.DISTANCE_BETWEEN_SAVES);
-        return Color.Lerp(
-            GetColor(mod((index - 1), (colors.Length - 1))),
-            GetColor(mod(index, (colors.Length - 1))),
-            (float)(x % Constants.DISTANCE_BETWEEN_SAVES) / Constants.DISTANCE_BETWEEN_SAVES);
+        float index = (((float)x) / Constants.DISTANCE_BETWEEN_SAVES) % Constants.COLORS_PER_CYCLE;
+        index /= Constants.COLORS_PER_CYCLE;
+        return Color.HSVToRGB(index, .4f, 1f);
+        // return Color.Lerp(
+        //     GetColor(mod((index - 1), (colors.Length - 1))),
+        //     GetColor(mod(index, (colors.Length - 1))),
+        //     (float)(x % Constants.DISTANCE_BETWEEN_SAVES) / Constants.DISTANCE_BETWEEN_SAVES);
     }
 
     static int mod(int x, int m)
