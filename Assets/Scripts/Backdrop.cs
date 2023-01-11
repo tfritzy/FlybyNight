@@ -42,7 +42,7 @@ public class Backdrop : MonoBehaviour
             renderer.color = color;
         }
 
-        Managers.GridManager.Tilemap.color = color;
+        Managers.GridManager.VisualGrid.color = color;
 
         Color.RGBToHSV(color, out float h, out float s, out float v);
 

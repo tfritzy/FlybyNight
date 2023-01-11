@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     public float ObstaclePerlinCutoff;
     public GameObject GemPrefab;
 
-    public Sprite[] TileCases;
+    public Tile[] TileCases;
 
     private int highestRenderedBlock;
     private int lastObstacleSpawnXPos;
@@ -94,15 +94,16 @@ public class GridManager : MonoBehaviour
             ConfigureColumn(i);
         }
 
-        this.highestRenderedBlock = GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2;
+        this.highestRenderedBlock = GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2 - 1;
     }
 
     private void ConfigureColumn(int x)
     {
         SpawnTilesForColumn(x);
-        UpdateVisualGridForColumn(x - 2);
         SpawnSaveMarkerIfApplicable(x - 1);
         SpawnObstacle(x - 4);
+        SpawnGem(x - 5);
+        UpdateVisualGridForColumn(x - 10);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -130,7 +131,7 @@ public class GridManager : MonoBehaviour
             }
 
             float distanceToMid = Mathf.Abs(y - centerHeight);
-            perlinValue += distanceToMid * .02f;
+            perlinValue += distanceToMid * .04f;
 
             if (perlinValue < ObstaclePerlinCutoff)
             {
@@ -181,9 +182,7 @@ public class GridManager : MonoBehaviour
             whichCase = whichCase | 8;
         }
 
-        Tile tile = new Tile();
-        tile.sprite = TileCases[whichCase];
-        VisualGrid.SetTile(new Vector3Int(x, y, 0), tile);
+        VisualGrid.SetTile(new Vector3Int(x, y, 0), TileCases[whichCase]);
     }
 
     private static int GetDistanceBetweenObstacles()
@@ -260,21 +259,24 @@ public class GridManager : MonoBehaviour
                 SpawnVerticalBarObstacle(x);
                 break;
         }
-
-        SpawnGemsForObstacle(x);
     }
 
     private const int DIST_BETWEEN_GEMS = 3;
-    private void SpawnGemsForObstacle(int obstacleXPos)
+    private void SpawnGem(int x)
     {
-        if (obstacleXPos % GetDistanceBetweenObstacles() != 0 || obstacleXPos <= 0)
+        if ((x + GetDistanceBetweenObstacles() / 2) % GetDistanceBetweenObstacles() != 0 || x <= 0)
         {
             return;
         }
 
-        Vector2 largestGap = findLargestGap(obstacleXPos);
-        float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f;
-        float xActualPos = obstacleXPos * Constants.BLOCK_WIDTH;
+        if (x <= GameState.Player.GetHighestRegionUnlocked() * Constants.DISTANCE_BETWEEN_SAVES)
+        {
+            return;
+        }
+
+        Vector2 largestGap = findLargestGap(x);
+        float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f + Random.Range(-1f, .5f);
+        float xActualPos = x * Constants.BLOCK_WIDTH;
         GameObject gem = Instantiate(GemPrefab, new Vector3(xActualPos, midPoint, 0), new Quaternion(), this.transform);
         InstantiatedGems.Add(gem);
 
