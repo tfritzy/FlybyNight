@@ -5,12 +5,15 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
+    public Tilemap VisualGrid;
     public Tilemap Tilemap;
     public RuleTile BaseTile;
     public GameObject SaveMarker;
     public float ObstaclePerlinScale;
     public float ObstaclePerlinCutoff;
     public GameObject GemPrefab;
+
+    public Sprite[] TileCases;
 
     private int highestRenderedBlock;
     private int lastObstacleSpawnXPos;
@@ -97,6 +100,7 @@ public class GridManager : MonoBehaviour
     private void ConfigureColumn(int x)
     {
         SpawnTilesForColumn(x);
+        UpdateVisualGridForColumn(x - 2);
         SpawnSaveMarkerIfApplicable(x - 1);
         SpawnObstacle(x - 4);
     }
@@ -140,6 +144,46 @@ public class GridManager : MonoBehaviour
         SetTile(x, Constants.BOTTOM_HEIGHT + 1);
         SetTile(x, Constants.TOP_HEIGHT);
         SetTile(x, Constants.TOP_HEIGHT - 1);
+    }
+
+    private void UpdateVisualGridForColumn(int x)
+    {
+        for (int y = Constants.BOTTOM_HEIGHT - 1; y <= Constants.TOP_HEIGHT + 1; y++)
+        {
+            UpdateVisualGrid(x, y);
+        }
+    }
+
+    private void UpdateVisualGrid(int x, int y)
+    {
+        int whichCase = 0;
+        Vector3Int pos = new Vector3Int(x, y, 0);
+        if (Tilemap.HasTile(pos))
+        {
+            whichCase = whichCase | 1;
+        }
+
+        pos.x += 1;
+        if (Tilemap.HasTile(pos))
+        {
+            whichCase = whichCase | 2;
+        }
+
+        pos.y += 1;
+        if (Tilemap.HasTile(pos))
+        {
+            whichCase = whichCase | 4;
+        }
+
+        pos.x -= 1;
+        if (Tilemap.HasTile(pos))
+        {
+            whichCase = whichCase | 8;
+        }
+
+        Tile tile = new Tile();
+        tile.sprite = TileCases[whichCase];
+        VisualGrid.SetTile(new Vector3Int(x, y, 0), tile);
     }
 
     private static int GetDistanceBetweenObstacles()
