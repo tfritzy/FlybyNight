@@ -113,25 +113,24 @@ public class UIManager : MonoBehaviour
         // this.GemCount.text = value.ToString();
     }
 
-    public void ToggleDifficulty()
-    {
-        Managers.FadeToBlackScreen.Darken(() =>
-        {
-            if (GameState.Player.SelectedDifficulty == DifficultySetting.Casual)
-            {
-                GameState.Player.SelectedDifficulty = DifficultySetting.Intense;
-            }
-            else
-            {
-                GameState.Player.SelectedDifficulty = DifficultySetting.Casual;
-            }
+    // public void ToggleDifficulty()
+    // {
+    //     Managers.FadeToBlackScreen.Darken(() =>
+    //     {
+    //         if (GameState.Player.SelectedDifficulty == DifficultySetting.Casual)
+    //         {
+    //             GameState.Player.SelectedDifficulty = DifficultySetting.Intense;
+    //         }
+    //         else
+    //         {
+    //             GameState.Player.SelectedDifficulty = DifficultySetting.Casual;
+    //         }
 
-            Managers.Helicopter.ChangeDifficulty();
-            Managers.GridManager.ResetGrid();
-            Managers.Camera.ForceMove();
-            Managers.FadeToBlackScreen.Lighten();
-        });
-    }
+    //         Managers.Helicopter.ChangeDifficulty();
+    //         Managers.Camera.ForceMove();
+    //         Managers.FadeToBlackScreen.Lighten();
+    //     });
+    // }
 
     public void OpenPrivacyPolicy()
     {

@@ -62,10 +62,7 @@ public class GridManager : MonoBehaviour
         while (highestRenderedBlock < GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2)
         {
             highestRenderedBlock += 1;
-            SpawnTilesForColumn(highestRenderedBlock);
-            // SpawnGemIfApplicable(highestRenderedBlock);
-            SpawnSaveMarkerIfApplicable(highestRenderedBlock - 1);
-            SpawnObstacle(highestRenderedBlock - 3);
+            ConfigureColumn(highestRenderedBlock);
 
             if (highestRenderedBlock / Constants.DISTANCE_BETWEEN_SAVES > renderedRanges.y)
             {
@@ -79,36 +76,11 @@ public class GridManager : MonoBehaviour
         return Managers.Helicopter.Distance;
     }
 
-    public void ResetGrid()
-    {
-        foreach (GameObject marker in SaveMarkers)
-        {
-            Destroy(marker);
-        }
-
-        foreach (GameObject gem in InstantiatedGems)
-        {
-            Destroy(gem);
-        }
-
-        InitiallySetupTiles();
-    }
-
     public void ResetGems()
     {
-        foreach (GameObject marker in SaveMarkers)
-        {
-            Destroy(marker);
-        }
-
         foreach (GameObject gem in InstantiatedGems)
         {
-            Destroy(gem);
-        }
-
-        for (int i = GetHelicopterBlockPos(); i < GetHelicopterBlockPos() + Constants.DISTANCE_BETWEEN_SAVES; i++)
-        {
-            SpawnGemsForObstacle(i);
+            gem.GetComponent<Gem>().Reset();
         }
     }
 
@@ -116,10 +88,17 @@ public class GridManager : MonoBehaviour
     {
         for (int i = GetHelicopterBlockPos() - Constants.NUM_COLUMNS_RENDERED / 2; i < GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2; i++)
         {
-            SpawnTilesForColumn(i);
+            ConfigureColumn(i);
         }
 
         this.highestRenderedBlock = GetHelicopterBlockPos() + Constants.NUM_COLUMNS_RENDERED / 2;
+    }
+
+    private void ConfigureColumn(int x)
+    {
+        SpawnTilesForColumn(x);
+        SpawnSaveMarkerIfApplicable(x - 1);
+        SpawnObstacle(x - 4);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -147,7 +126,7 @@ public class GridManager : MonoBehaviour
             }
 
             float distanceToMid = Mathf.Abs(y - centerHeight);
-            perlinValue += distanceToMid * .08f;
+            perlinValue += distanceToMid * .02f;
 
             if (perlinValue < ObstaclePerlinCutoff)
             {
@@ -412,7 +391,13 @@ public class GridManager : MonoBehaviour
                     markerYPos + Constants.BLOCK_WIDTH / 4,
                     10) * Constants.BLOCK_WIDTH, new Quaternion());
             SaveMarkers.Add(marker);
-            marker.GetComponent<SaveMarker>().ZoneIndex = x / Constants.DISTANCE_BETWEEN_SAVES;
+            SaveMarker save = marker.GetComponent<SaveMarker>();
+            save.ZoneIndex = x / Constants.DISTANCE_BETWEEN_SAVES;
+            if (x < GameState.Player.GetHighestDistanceReached())
+            {
+                save.ForceLight();
+            }
+
             for (int xi = x - 1; xi <= x + 1; xi++)
             {
                 for (int y = markerYPos - 1; y > Constants.BOTTOM_HEIGHT; y--)

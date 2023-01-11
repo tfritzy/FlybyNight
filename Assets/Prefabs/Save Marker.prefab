@@ -108,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142279392158972942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.7014048, y: 1.6453568, z: 0.0013020833}
+  m_LocalPosition: {x: 2.7014048, y: 1.6453568, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2142279391967635341}
@@ -283,17 +283,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireColor
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.231
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.33
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: cceb107d4161db34bbaa66179979cc05, type: 3}
       propertyPath: m_LocalRotation.x

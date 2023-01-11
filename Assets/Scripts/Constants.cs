@@ -5,7 +5,7 @@ public static class Constants
     public const int NUM_COLUMNS_RENDERED = 100;
     public const int TOP_HEIGHT = WINDOW_BLOCK_HEIGHT / 2;
     public const int BOTTOM_HEIGHT = -WINDOW_BLOCK_HEIGHT / 2 - 1;
-    public const int CAVE_RADIUS = 14;
+    public const int CAVE_RADIUS = 10;
     public const int DISTANCE_BETWEEN_SAVES = 400;
 
     public static class Tags

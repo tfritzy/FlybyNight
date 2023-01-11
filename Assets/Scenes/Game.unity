@@ -3412,8 +3412,8 @@ MonoBehaviour:
   BaseTile: {fileID: 11400000, guid: 9ec10a2cf5b490141aedfc77d0265c6b, type: 2}
   SaveMarker: {fileID: 2142279392158972942, guid: 185e5d24c966cfa4fb052d1f9c483510,
     type: 3}
-  ObstaclePerlinScale: 0
-  ObstaclePerlinCutoff: 0
+  ObstaclePerlinScale: 0.1
+  ObstaclePerlinCutoff: 0.5
   GemPrefab: {fileID: 3812337916144626177, guid: 4fc8faa11fb49284d9024c80755c7c10,
     type: 3}
 --- !u!1 &1152461419

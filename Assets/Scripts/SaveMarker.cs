@@ -58,4 +58,9 @@ public class SaveMarker : MonoBehaviour
             lit = true;
         }
     }
+
+    public void ForceLight()
+    {
+        this.lit = true;
+    }
 }

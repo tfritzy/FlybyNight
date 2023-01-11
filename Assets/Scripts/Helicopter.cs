@@ -89,6 +89,7 @@ public class Helicopter : MonoBehaviour
         this.choppingSound.pitch = this.targetChoppingPitch;
         Managers.Backdrop.SetColor();
         this.Fuel = 1;
+        Managers.GridManager.ResetGems();
 
         foreach (SpriteRenderer part in this.bodyParts)
         {
@@ -194,7 +195,6 @@ public class Helicopter : MonoBehaviour
         this.State = HelicopterState.Dead;
         this.SpawnExplosion(this.transform.position);
         Managers.Camera.TriggerShake();
-        Managers.GridManager.ResetGems();
         foreach (SpriteRenderer part in this.bodyParts)
         {
             part.gameObject.SetActive(false);

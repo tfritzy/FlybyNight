@@ -96,22 +96,29 @@ public class Gem : MonoBehaviour
         {
             Collect();
             Color color = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
-            foreach (ParticleSystem ps in CollectionEffect.GetComponentsInChildren<ParticleSystem>())
+            var collectionEffect = GameObject.Instantiate(CollectionEffect, this.transform.position, new Quaternion());
+            foreach (ParticleSystem ps in collectionEffect.GetComponentsInChildren<ParticleSystem>())
             {
                 var main = ps.main;
                 main.startColor = Color.white;
             }
 
-            CollectionEffect.SetActive(true);
-            CollectionEffect.transform.SetParent(null);
+            collectionEffect.SetActive(true);
+            collectionEffect.transform.SetParent(null);
             isCollected = true;
-            Destroy(this.gameObject);
-            Destroy(CollectionEffect, 10f);
+            this.gameObject.SetActive(false);
+            Destroy(collectionEffect, 10f);
         }
     }
 
     public void Collect()
     {
         Managers.Helicopter.AddFuel(.33f);
+    }
+
+    public void Reset()
+    {
+        this.isCollected = false;
+        this.gameObject.SetActive(true);
     }
 }
