@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
 {
     public Tilemap VisualGrid;
     public Tilemap Tilemap;
-    public RuleTile BaseTile;
+    // public RuleTile BaseTile;
     public GameObject SaveMarker;
     public float ObstaclePerlinScale;
     public float ObstaclePerlinCutoff;
@@ -476,7 +476,7 @@ public class GridManager : MonoBehaviour
     private void SetTile(int x, int y)
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
-        Tilemap.SetTile(pos, BaseTile);
+        Tilemap.SetTile(pos, TileCases[0]);
     }
 
     public static int GetCaveMidAtPos(int x)
