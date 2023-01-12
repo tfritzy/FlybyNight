@@ -97,17 +97,17 @@ public static class Managers
         }
     }
 
-    // private static GPGManager gpgManager;
-    // public static GPGManager GPGManager
-    // {
-    //     get
-    //     {
-    //         if (gpgManager == null)
-    //         {
-    //             gpgManager = GameObject.Find("LeaderboardManager").GetComponent<GPGManager>();
-    //         }
+    private static LeaderboardManager _leaderboardManager;
+    public static LeaderboardManager LeaderboardManager
+    {
+        get
+        {
+            if (_leaderboardManager == null)
+            {
+                _leaderboardManager = GameObject.Find("LeaderboardManager").GetComponent<LeaderboardManager>();
+            }
 
-    //         return gpgManager;
-    //     }
-    // }
+            return _leaderboardManager;
+        }
+    }
 }
