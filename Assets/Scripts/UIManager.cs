@@ -28,8 +28,7 @@ public class UIManager : MonoBehaviour
         SetUIForHelicopterHovering();
         InitSettingsWindow();
         SetupAudioSettingsButtons();
-        SetGemCount(GameState.Player.GemCount);
-        // SetupFramerateButtons();
+        SettingsWindow.gameObject.SetActive(false);
     }
 
     void Update()
@@ -67,29 +66,26 @@ public class UIManager : MonoBehaviour
 
     private void InitSettingsWindow()
     {
-        SettingsWindow.gameObject.SetActive(false);
+        MusicSlider.SetValueWithoutNotify(GameState.Player.MusicLevel);
+        SFXSlider.SetValueWithoutNotify(GameState.Player.SFXLevel);
     }
 
     public void OpenSettings()
     {
-        // Managers.Camera.GetComponent<BlurManager>().IncreaseBlur();
         SettingsWindow.gameObject.SetActive(true);
+        InitSettingsWindow();
         SettingsWindow.GetComponent<Animator>().SetBool("IsOpen", true);
     }
 
     public void CloseSettings()
     {
-        // Managers.Camera.GetComponent<BlurManager>().DecreaseBlur();
+        GameState.Save();
         SettingsWindow.GetComponent<Animator>().SetBool("IsOpen", false);
     }
 
     private void SetupAudioSettingsButtons()
     {
-        // bool isMusicAudible = AudioManager.IsMusicAudible();
-        // SetSettingsButtonIcon(ToggleMusicButton.gameObject, isMusicAudible);
 
-        // bool areSFXAudible = AudioManager.AreSFXAudible();
-        // SetSettingsButtonIcon(ToggleSFXButton.gameObject, areSFXAudible);
     }
 
     private void SetSettingsButtonIcon(GameObject button, bool isOn)
@@ -101,40 +97,18 @@ public class UIManager : MonoBehaviour
     public void SetSFXLevel(float value)
     {
         AudioManager.SetSFXLevel(value);
+        GameState.Player.SFXLevel = value;
     }
 
     public void SetMusicLevel(float value)
     {
         AudioManager.SetMusicLevel(value);
+        GameState.Player.MusicLevel = value;
     }
-
-    public void SetGemCount(int value)
-    {
-        // this.GemCount.text = value.ToString();
-    }
-
-    // public void ToggleDifficulty()
-    // {
-    //     Managers.FadeToBlackScreen.Darken(() =>
-    //     {
-    //         if (GameState.Player.SelectedDifficulty == DifficultySetting.Casual)
-    //         {
-    //             GameState.Player.SelectedDifficulty = DifficultySetting.Intense;
-    //         }
-    //         else
-    //         {
-    //             GameState.Player.SelectedDifficulty = DifficultySetting.Casual;
-    //         }
-
-    //         Managers.Helicopter.ChangeDifficulty();
-    //         Managers.Camera.ForceMove();
-    //         Managers.FadeToBlackScreen.Lighten();
-    //     });
-    // }
 
     public void OpenPrivacyPolicy()
     {
-        Application.OpenURL("https://github.com/tfritzy/FlyByNightPrivacyPolicy/blob/main/PrivacyPolicy.md");
+        Application.OpenURL("https://github.com/tfritzy/FlyByNightPrivacyPolicy/blob/main/index.md");
     }
 
     private float lastColorUpdateTime;

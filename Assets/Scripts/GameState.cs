@@ -1,7 +1,5 @@
 using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public static class GameState

@@ -199,7 +199,7 @@ public class Helicopter : MonoBehaviour
         {
             part.gameObject.SetActive(false);
         }
-        GameState.Player.HighestDistanceUnlocked[GameState.Player.SelectedDifficulty] = Distance;
+        GameState.Player.HighestDistanceUnlocked = Distance;
         Managers.LeaderboardManager.PostScore(Distance);
         needsToSave = true;
         SpawnDeathObjects();

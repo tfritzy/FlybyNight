@@ -3,7 +3,6 @@ using System.IO;
 // Add System.Security.Crytography to use Encryption!
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using UnityEngine;
 
 public static class FileEncryptor
@@ -47,7 +46,7 @@ public static class FileEncryptor
 
             // Deserialize the JSON data 
             //  into a pattern matching the GameData class.
-            return JsonConvert.DeserializeObject<PlayerData>(text);
+            return JsonUtility.FromJson<PlayerData>(text);
         }
 
         return new PlayerData();
@@ -77,7 +76,7 @@ public static class FileEncryptor
         StreamWriter sWriter = new StreamWriter(iStream);
 
         // Serialize the object into JSON and save string.
-        string jsonString = JsonConvert.SerializeObject(data);
+        string jsonString = JsonUtility.ToJson(data);
         Debug.Log(jsonString);
 
         // Write to the innermost stream (which will encrypt).

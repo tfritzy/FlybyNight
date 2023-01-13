@@ -1,35 +1,21 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
 
 public class PlayerData
 {
-    public Dictionary<DifficultySetting, int> HighestDistanceUnlocked;
+    public int HighestDistanceUnlocked;
     public int GemCount;
-    public DifficultySetting SelectedDifficulty;
-
-    public PlayerData()
-    {
-        HighestDistanceUnlocked = new Dictionary<DifficultySetting, int>();
-    }
+    private const DifficultySetting difficultySetting = DifficultySetting.Casual;
+    public float SFXLevel;
+    public float MusicLevel;
 
     public int GetHighestRegionUnlocked()
     {
-        if (HighestDistanceUnlocked.ContainsKey(this.SelectedDifficulty))
-        {
-            return HighestDistanceUnlocked[this.SelectedDifficulty] / Constants.DISTANCE_BETWEEN_SAVES;
-        }
-
-        return 0;
+        return HighestDistanceUnlocked / Constants.DISTANCE_BETWEEN_SAVES;
     }
 
-    public int GetHighestDistanceReached()
+    public int GetFirePosOfHighestRegion()
     {
-        if (HighestDistanceUnlocked.ContainsKey(this.SelectedDifficulty))
-        {
-            return HighestDistanceUnlocked[this.SelectedDifficulty];
-        }
-
-        return 0;
+        return GetHighestRegionUnlocked() * Constants.DISTANCE_BETWEEN_SAVES;
     }
 }

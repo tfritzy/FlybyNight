@@ -46,6 +46,6 @@ public class Backdrop : MonoBehaviour
 
         Color.RGBToHSV(color, out float h, out float s, out float v);
 
-        moonRenderer.color = Color.HSVToRGB(h, .4f, 1f);
+        moonRenderer.color = Color.HSVToRGB(h, .4f, .9f);
     }
 }

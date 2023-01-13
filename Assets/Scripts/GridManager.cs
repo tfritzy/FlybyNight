@@ -188,45 +188,16 @@ public class GridManager : MonoBehaviour
     private static int GetDistanceBetweenObstacles()
     {
         return 30;
-
-        switch (GameState.Player.SelectedDifficulty)
-        {
-            case (DifficultySetting.Casual):
-                return 50;
-            case (DifficultySetting.Intense):
-                return 40;
-            default:
-                throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
-        }
     }
 
     private static int GetObstacleHeight()
     {
         return 6;
-
-        switch (GameState.Player.SelectedDifficulty)
-        {
-            case (DifficultySetting.Casual):
-                return 4;
-            case (DifficultySetting.Intense):
-                return 8;
-            default:
-                throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
-        }
     }
 
     private static int CenterGapObstacleHalfHeight()
     {
         return 3;
-        switch (GameState.Player.SelectedDifficulty)
-        {
-            case (DifficultySetting.Casual):
-                return 4;
-            case (DifficultySetting.Intense):
-                return 2;
-            default:
-                throw new System.Exception("Unknown difficulty " + GameState.Player.SelectedDifficulty);
-        }
     }
 
 
@@ -378,15 +349,7 @@ public class GridManager : MonoBehaviour
 
     private int GetSlabCount()
     {
-        switch (GameState.Player.SelectedDifficulty)
-        {
-            case (DifficultySetting.Casual):
-                return 3;
-            case (DifficultySetting.Intense):
-                return 4;
-            default:
-                throw new System.Exception("No switch implemented for difficulty: " + GameState.Player.SelectedDifficulty);
-        }
+        return 3;
     }
 
     private void SpawnHorizontalSlabs(int x)
@@ -439,7 +402,7 @@ public class GridManager : MonoBehaviour
             SaveMarkers.Add(marker);
             SaveMarker save = marker.GetComponent<SaveMarker>();
             save.ZoneIndex = x / Constants.DISTANCE_BETWEEN_SAVES;
-            if (x < GameState.Player.GetHighestDistanceReached())
+            if (x < GameState.Player.HighestDistanceUnlocked)
             {
                 save.ForceLight();
             }
@@ -460,7 +423,7 @@ public class GridManager : MonoBehaviour
     {
         float index = (((float)x) / Constants.DISTANCE_BETWEEN_SAVES) % Constants.COLORS_PER_CYCLE;
         index /= Constants.COLORS_PER_CYCLE;
-        return Color.HSVToRGB(index, .4f, 1f);
+        return Color.HSVToRGB(index, .5f, .9f);
         // return Color.Lerp(
         //     GetColor(mod((index - 1), (colors.Length - 1))),
         //     GetColor(mod(index, (colors.Length - 1))),

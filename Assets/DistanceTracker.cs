@@ -19,7 +19,7 @@ public class DistanceTracker : MonoBehaviour
 
     private string DistToString(int dist)
     {
-        if (dist > 99999)
+        if (dist > 9999)
         {
             return ((float)dist / 1000).ToString("0.0 km");
         }
