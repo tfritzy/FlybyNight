@@ -8,6 +8,7 @@ public static class Constants
     public const int CAVE_RADIUS = 12;
     public const int DISTANCE_BETWEEN_SAVES = 615;
     public const int COLORS_PER_CYCLE = 16;
+    public const int DIST_BETWEEN_OBSTACLES = 30;
 
     public static class Tags
     {

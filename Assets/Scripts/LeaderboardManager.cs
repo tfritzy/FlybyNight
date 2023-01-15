@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
 {
+    public void PostScore(int distance)
+    {
+        #if UNITY_ANDROID
+        if (Social.localUser.authenticated)
+        {
+            PlayGamesPlatform.Instance.ReportScore(
+                distance,
+                GPGSIds.leaderboard_furthest,
+                (success) =>
+                {
+                    if (success) Debug.Log("Score posted to leaderboard " + GameState.Player.HighestDistanceUnlocked);
+                    else Debug.Log("Score leaderboard post failed " + GameState.Player.HighestDistanceUnlocked);
+                });
+        }
+        #endif
+    }
+
+
+    #if UNITY_ANDROID
     void Awake()
     {
         PlayGamesPlatform.Activate();
@@ -19,21 +38,6 @@ public class LeaderboardManager : MonoBehaviour
                 Debug.Log("login success");
             }
         });
-    }
-
-    public void PostScore(int distance)
-    {
-        if (Social.localUser.authenticated)
-        {
-            PlayGamesPlatform.Instance.ReportScore(
-                distance,
-                GPGSIds.leaderboard_furthest,
-                (success) =>
-                {
-                    if (success) Debug.Log("Score posted to leaderboard " + GameState.Player.HighestDistanceUnlocked);
-                    else Debug.Log("Score leaderboard post failed " + GameState.Player.HighestDistanceUnlocked);
-                });
-        }
     }
 
     public void OpenLeaderboard()
@@ -57,4 +61,5 @@ public class LeaderboardManager : MonoBehaviour
             PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_furthest);
         }
     }
+    #endif
 }

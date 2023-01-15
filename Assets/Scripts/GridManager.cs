@@ -7,11 +7,16 @@ public class GridManager : MonoBehaviour
 {
     public Tilemap VisualGrid;
     public Tilemap Tilemap;
-    // public RuleTile BaseTile;
     public GameObject SaveMarker;
     public float ObstaclePerlinScale;
     public float ObstaclePerlinCutoff;
     public GameObject GemPrefab;
+
+    // Coins
+    public GameObject Coin;
+    // A dictionary with x being the key and y being the midpoint of the coin curve.
+    public Dictionary<int, int> CoinCurveMidPoints = new Dictionary<int, int>();
+
 
     public Tile[] TileCases;
 
@@ -104,6 +109,8 @@ public class GridManager : MonoBehaviour
         SpawnObstacle(x - 4);
         SpawnGem(x - 5);
         UpdateVisualGridForColumn(x - 10);
+        UpdateCoinCurvePos(x - 10);
+        SpawnCoin(x - 11);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -185,11 +192,6 @@ public class GridManager : MonoBehaviour
         VisualGrid.SetTile(new Vector3Int(x, y, 0), TileCases[whichCase]);
     }
 
-    private static int GetDistanceBetweenObstacles()
-    {
-        return 30;
-    }
-
     private static int GetObstacleHeight()
     {
         return 6;
@@ -200,10 +202,9 @@ public class GridManager : MonoBehaviour
         return 3;
     }
 
-
     private void SpawnObstacle(int x)
     {
-        if (x % GetDistanceBetweenObstacles() != 0 || x <= 0)
+        if (x % Constants.DIST_BETWEEN_OBSTACLES != 0 || x <= 0)
         {
             return;
         }
@@ -232,10 +233,9 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private const int DIST_BETWEEN_GEMS = 3;
     private void SpawnGem(int x)
     {
-        if ((x + GetDistanceBetweenObstacles() / 2) % GetDistanceBetweenObstacles() != 0 || x <= 0)
+        if ((x + Constants.DIST_BETWEEN_OBSTACLES / 2) % Constants.DIST_BETWEEN_OBSTACLES != 0 || x <= 0)
         {
             return;
         }
@@ -245,71 +245,44 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        Vector2 largestGap = findLargestGap(x);
-        float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f + Random.Range(-1f, .5f);
         float xActualPos = x * Constants.BLOCK_WIDTH;
-        GameObject gem = Instantiate(GemPrefab, new Vector3(xActualPos, midPoint, 0), new Quaternion(), this.transform);
+        GameObject gem = Instantiate(
+            GemPrefab,
+            new Vector3(
+                xActualPos,
+                findLargestGap(x),
+                0),
+            new Quaternion(),
+            this.transform);
         InstantiatedGems.Add(gem);
-
-        // int gemCount = Random.Range(0, 2) == 0 ? 3 : 5;
-        // Vector3[] gemPositions = GetGemPositions(obstacleXPos, gemCount);
-        // foreach (Vector3 pos in gemPositions)
-        // {
-        //     GameObject gem = Instantiate(GemPrefab, pos, new Quaternion(), this.transform);
-        //     if (pos == gemPositions[gemPositions.Length / 2])
-        //     {
-        //         gem.GetComponent<Gem>().SetTier(random.Next(0, 5) == 0 ? Gem.GemTier.High : Gem.GemTier.Mid);
-        //     }
-        //     else
-        //     {
-        //         gem.GetComponent<Gem>().SetTier(Gem.GemTier.Low);
-        //     }
-
-        //     InstantiatedGems.Add(gem);
-        // }
-
-        // float caveSlope = GetCaveMidAtPos(obstacleXPos) - GetCaveMidAtPos(obstacleXPos - 10);
     }
 
-    private Vector3[] GetGemPositions(int xPos, int numGems)
+    private const int DIST_BETWEEN_CURVES = Constants.DIST_BETWEEN_OBSTACLES / 2;
+    private const int GEM_OFFSET = DIST_BETWEEN_CURVES;
+    private void UpdateCoinCurvePos(int x)
     {
-        Vector2 largestGap = findLargestGap(xPos);
-        float midPoint = (float)largestGap.x + (largestGap.y - largestGap.x) / 2f;
-        int gemEdgeDelta = (numGems / 2) * DIST_BETWEEN_GEMS;
-        float farLeftYPos = GetCaveMidAtPos(xPos - DIST_BETWEEN_GEMS * 2) + Constants.BLOCK_WIDTH / 2f;
-        float farRightYPos = GetCaveMidAtPos(xPos + DIST_BETWEEN_GEMS * 2) + Constants.BLOCK_WIDTH / 2f;
-
-        if (numGems == 1)
+        if (x % Constants.DIST_BETWEEN_OBSTACLES == 0)
         {
-            return new Vector3[] {
-                new Vector3(xPos, midPoint, 0),
-            };
-        }
-        else if (numGems == 3)
+            Instantiate(
+                Coin,
+                new Vector3(
+                    x * Constants.BLOCK_WIDTH,
+                    findLargestGap(x),
+                    0),
+                    new Quaternion());
+        } else if (x % (Constants.DIST_BETWEEN_OBSTACLES + GEM_OFFSET) == 0)
         {
-            return new Vector3[] {
-                new Vector3(xPos - DIST_BETWEEN_GEMS, farLeftYPos + (midPoint - farLeftYPos) / 2, 0),
-                new Vector3(xPos, midPoint, 0),
-                new Vector3(xPos + DIST_BETWEEN_GEMS, farRightYPos + (midPoint - farRightYPos) / 2, 0),
-            };
-        }
-        else if (numGems == 5)
-        {
-            return new Vector3[] {
-                new Vector3(xPos - DIST_BETWEEN_GEMS * 2, farLeftYPos, 0),
-                new Vector3(xPos - DIST_BETWEEN_GEMS, farLeftYPos + (midPoint - farLeftYPos) / 2, 0),
-                new Vector3(xPos, midPoint, 0),
-                new Vector3(xPos + DIST_BETWEEN_GEMS, farRightYPos + (midPoint - farRightYPos) / 2, 0),
-                new Vector3(xPos + DIST_BETWEEN_GEMS * 2, farRightYPos, 0),
-            };
-        }
-        else
-        {
-            throw new System.Exception($"Spawning {numGems} gems is not supported");
+            float midPoint = GetCaveMidAtPos(x);
+            Instantiate(Coin, new Vector3(x * Constants.BLOCK_WIDTH, midPoint * Constants.BLOCK_WIDTH, 0), new Quaternion());   
         }
     }
 
-    private Vector2 findLargestGap(int x)
+    private void SpawnCoin(int x)
+    {
+
+    }
+
+    private float findLargestGap(int x)
     {
         Vector2Int largestGapBounds = new Vector2Int(Constants.BOTTOM_HEIGHT, Constants.BOTTOM_HEIGHT);
         Vector2Int currentGapBounds = new Vector2Int(Constants.BOTTOM_HEIGHT, Constants.BOTTOM_HEIGHT);
@@ -331,7 +304,11 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        return new Vector2(largestGapBounds.x * Constants.BLOCK_WIDTH, largestGapBounds.y * Constants.BLOCK_WIDTH);
+        bool isOdd = (largestGapBounds.y - largestGapBounds.x) % 2 != 0;
+        Vector2 largestGap = ((Vector2)largestGapBounds) * Constants.BLOCK_WIDTH;
+        if (isOdd) largestGap.y -= Constants.BLOCK_WIDTH;
+        else largestGap.y -= Constants.BLOCK_WIDTH / 2;
+        return largestGap.x + (largestGap.y - largestGap.x) / 2f;
     }
 
     private void SpawnVerticalBarObstacle(int x)

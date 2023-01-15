@@ -3976,6 +3976,7 @@ MonoBehaviour:
   ObstaclePerlinCutoff: 0.5
   GemPrefab: {fileID: 3812337916144626177, guid: 4fc8faa11fb49284d9024c80755c7c10,
     type: 3}
+  Coin: {fileID: 5564758101006845870, guid: bf792ca268d334b45a1e48b2ec3f84e5, type: 3}
   TileCases:
   - {fileID: 11400000, guid: fe99e655928746e45ab556f23716c9ca, type: 2}
   - {fileID: 11400000, guid: b33196de7fbe00849a39974f681fc884, type: 2}
