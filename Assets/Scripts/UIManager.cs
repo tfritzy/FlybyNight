@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenPrivacyPolicy()
     {
-        Application.OpenURL("https://github.com/tfritzy/FlyByNightPrivacyPolicy/blob/main/index.md");
+        Application.OpenURL("https://tfritzy.github.io/FlyByNightPrivacyPolicy/");
     }
 
     private float lastColorUpdateTime;

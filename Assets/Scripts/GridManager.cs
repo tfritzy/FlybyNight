@@ -109,8 +109,8 @@ public class GridManager : MonoBehaviour
         SpawnObstacle(x - 4);
         SpawnGem(x - 5);
         UpdateVisualGridForColumn(x - 10);
-        UpdateCoinCurvePos(x - 10);
-        SpawnCoin(x - 11);
+        // UpdateCoinCurvePos(x - 10);
+        // SpawnCoin(x - 11);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -270,10 +270,11 @@ public class GridManager : MonoBehaviour
                     findLargestGap(x),
                     0),
                     new Quaternion());
-        } else if (x % (Constants.DIST_BETWEEN_OBSTACLES + GEM_OFFSET) == 0)
+        }
+        else if (x % (Constants.DIST_BETWEEN_OBSTACLES + GEM_OFFSET) == 0)
         {
             float midPoint = GetCaveMidAtPos(x);
-            Instantiate(Coin, new Vector3(x * Constants.BLOCK_WIDTH, midPoint * Constants.BLOCK_WIDTH, 0), new Quaternion());   
+            Instantiate(Coin, new Vector3(x * Constants.BLOCK_WIDTH, midPoint * Constants.BLOCK_WIDTH, 0), new Quaternion());
         }
     }
 
