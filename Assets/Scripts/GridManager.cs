@@ -15,8 +15,7 @@ public class GridManager : MonoBehaviour
     // Coins
     public GameObject Coin;
     // A dictionary with x being the key and y being the midpoint of the coin curve.
-    public Dictionary<int, int> CoinCurveMidPoints = new Dictionary<int, int>();
-
+    public Dictionary<int, float> CoinCurveMidPoints = new Dictionary<int, float>();
 
     public Tile[] TileCases;
 
@@ -109,8 +108,7 @@ public class GridManager : MonoBehaviour
         SpawnObstacle(x - 4);
         SpawnGem(x - 5);
         UpdateVisualGridForColumn(x - 10);
-        // UpdateCoinCurvePos(x - 10);
-        // SpawnCoin(x - 11);
+        SpawnCoin(x - 11);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -231,6 +229,10 @@ public class GridManager : MonoBehaviour
                 SpawnVerticalBarObstacle(x);
                 break;
         }
+
+        int index = x / DIST_BETWEEN_CURVES;
+        Debug.Log(index);
+        CoinCurveMidPoints[index] = findLargestGap(x);
     }
 
     private void SpawnGem(int x)
@@ -245,13 +247,15 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        float midPoint = findLargestGap(x);
+        int index = x / DIST_BETWEEN_CURVES;
+        Debug.Log(index);
+        CoinCurveMidPoints[index] = midPoint;
+
         float xActualPos = x * Constants.BLOCK_WIDTH;
         GameObject gem = Instantiate(
             GemPrefab,
-            new Vector3(
-                xActualPos,
-                findLargestGap(x),
-                0),
+            new Vector3(xActualPos, midPoint, 0),
             new Quaternion(),
             this.transform);
         InstantiatedGems.Add(gem);
@@ -259,28 +263,33 @@ public class GridManager : MonoBehaviour
 
     private const int DIST_BETWEEN_CURVES = Constants.DIST_BETWEEN_OBSTACLES / 2;
     private const int GEM_OFFSET = DIST_BETWEEN_CURVES;
-    private void UpdateCoinCurvePos(int x)
-    {
-        if (x % Constants.DIST_BETWEEN_OBSTACLES == 0)
-        {
-            Instantiate(
-                Coin,
-                new Vector3(
-                    x * Constants.BLOCK_WIDTH,
-                    findLargestGap(x),
-                    0),
-                    new Quaternion());
-        }
-        else if (x % (Constants.DIST_BETWEEN_OBSTACLES + GEM_OFFSET) == 0)
-        {
-            float midPoint = GetCaveMidAtPos(x);
-            Instantiate(Coin, new Vector3(x * Constants.BLOCK_WIDTH, midPoint * Constants.BLOCK_WIDTH, 0), new Quaternion());
-        }
-    }
-
     private void SpawnCoin(int x)
     {
+        // if (x > 0 && x % DIST_BETWEEN_CURVES == 0)
+        // {
+        int index = x / DIST_BETWEEN_CURVES;
+        Debug.Log(index);
+        Vector2 pos = Interpolate(x);
+        Instantiate(Coin, pos, new Quaternion());
+        // }
+    }
 
+    private Vector2 Interpolate(int x)
+    {
+        int low = DIST_BETWEEN_CURVES * (x / DIST_BETWEEN_CURVES);
+        float t = (x - low) / DIST_BETWEEN_CURVES;
+        Vector2 P0 = GetPoint(x);
+        Vector2 P2 = GetPoint(x + 1);
+        Vector2 delta = (P2 - P0) / 2;
+        // delta.y = 0;
+        Vector2 P1 = P0 + delta;
+        return (1 - t) * ((1 - t) * P0 + t * P1) + t * ((1 - t) * P1 + t * P2);
+    }
+
+    private Vector2 GetPoint(int x)
+    {
+        int index = x / DIST_BETWEEN_CURVES;
+        return new Vector2(x * Constants.BLOCK_WIDTH, CoinCurveMidPoints[index]);
     }
 
     private float findLargestGap(int x)
