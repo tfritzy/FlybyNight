@@ -6,7 +6,7 @@ public class LeaderboardManager : MonoBehaviour
 {
     public void PostScore(int distance)
     {
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
         if (Social.localUser.authenticated)
         {
             PlayGamesPlatform.Instance.ReportScore(
@@ -18,11 +18,11 @@ public class LeaderboardManager : MonoBehaviour
                     else Debug.Log("Score leaderboard post failed " + GameState.Player.HighestDistanceUnlocked);
                 });
         }
-        #endif
+#endif
     }
 
 
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
     void Awake()
     {
         PlayGamesPlatform.Activate();
@@ -61,5 +61,5 @@ public class LeaderboardManager : MonoBehaviour
             PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_furthest);
         }
     }
-    #endif
+#endif
 }

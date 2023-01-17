@@ -108,7 +108,7 @@ public class GridManager : MonoBehaviour
         SpawnObstacle(x - 4);
         SpawnGem(x - 5);
         UpdateVisualGridForColumn(x - 10);
-        SpawnCoin(x - DIST_BETWEEN_CURVE_CENTERS * 2);
+        SpawnCoin(x - DIST_BETWEEN_CURVE_CENTERS - 5);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -232,7 +232,6 @@ public class GridManager : MonoBehaviour
 
         int index = x / DIST_BETWEEN_CURVE_CENTERS;
         CoinCurveMidPoints[index] = findLargestGap(x);
-        Instantiate(Coin, new Vector2(x * Constants.BLOCK_WIDTH, findLargestGap(x)), new Quaternion());
     }
 
     private void SpawnGem(int x)
@@ -251,14 +250,13 @@ public class GridManager : MonoBehaviour
         int index = x / DIST_BETWEEN_CURVE_CENTERS;
         CoinCurveMidPoints[index] = midPoint;
 
-        Instantiate(Coin, new Vector2(x * Constants.BLOCK_WIDTH, midPoint), new Quaternion());
-
         float xActualPos = x * Constants.BLOCK_WIDTH;
         GameObject gem = Instantiate(
             GemPrefab,
             new Vector3(xActualPos, midPoint, 0),
             new Quaternion(),
             this.transform);
+        gem.GetComponent<Gem>().Init(x);
         InstantiatedGems.Add(gem);
     }
 
@@ -274,13 +272,15 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        // Instantiate(Coin, pos.Value, new Quaternion());
+        var coin = Instantiate(Coin, pos.Value, new Quaternion());
+        coin.GetComponent<Coin>().Init(x);
     }
 
     private Vector2? Interpolate(int x)
     {
         int low = DIST_BETWEEN_CURVES * (x / DIST_BETWEEN_CURVES);
         float t = (x - low) / (float)DIST_BETWEEN_CURVES;
+        // t = (1 - Mathf.Min(1, Mathf.Log10(t)));
         Vector2? a = GetPoint(x);
         Vector2? c = GetPoint(x + DIST_BETWEEN_CURVES);
 
@@ -289,26 +289,24 @@ public class GridManager : MonoBehaviour
             return null;
         }
 
-        Vector2 b = new Vector2(c.Value.x - 1, a.Value.y);
+        Vector2 b;
+        if (IsFirstHalfOfCurve(x))
+        {
+            b = new Vector2(c.Value.x - 1, a.Value.y);
+        }
+        else
+        {
+            b = new Vector2(a.Value.x + 1, c.Value.y);
+        }
 
-        // var aCoin = Instantiate(Coin, a.Value, new Quaternion());
-        // // var bCoin = Instantiate(Coin, b, new Quaternion());
-        // var cCoin = Instantiate(Coin, c.Value, new Quaternion());
-        // aCoin.GetComponent<SpriteRenderer>().color = Color.red;
-        // // bCoin.GetComponent<SpriteRenderer>().color = Color.green;
-        // cCoin.GetComponent<SpriteRenderer>().color = Color.blue;
-        // aCoin.transform.localScale *= .5f;
-        // // bCoin.transform.localScale *= .5f;
-        // cCoin.transform.localScale *= .5f;
 
         var ab = Vector2.Lerp(a.Value, b, t);
         var bc = Vector2.Lerp(b, c.Value, t);
         var result = Vector2.Lerp(ab, bc, t);
-        Debug.Log($"P0 {a}, P1 {b}, P2 {c}, t {t}, value {result}");
 
-        var coin = Instantiate(Coin, result, new Quaternion());
-        coin.GetComponent<SpriteRenderer>().color = Color.white;
-        coin.transform.localScale *= .2f;
+        // var coin = Instantiate(Coin, result, new Quaternion());
+        // coin.GetComponent<SpriteRenderer>().color = Color.white;
+        // coin.transform.localScale *= .2f;
 
         return result;
     }
@@ -318,29 +316,19 @@ public class GridManager : MonoBehaviour
         int curveIndex = x / DIST_BETWEEN_CURVES;
         int centerIndex = x / DIST_BETWEEN_CURVE_CENTERS;
 
-        Debug.Log($"curveIndex * DIST_BETWEEN_CURVES({curveIndex * DIST_BETWEEN_CURVES})")
-
-        if ((curveIndex * DIST_BETWEEN_CURVES) % DIST_BETWEEN_CURVE_CENTERS == 0)
+        if (IsFirstHalfOfCurve(x))
         {
-            Debug.Log($"first half {curveIndex}");
-            // First half of curve.
             if (!CoinCurveMidPoints.ContainsKey(centerIndex))
             {
                 return null;
             }
 
-            var pos = new Vector2(
+            return new Vector2(
                 (centerIndex * DIST_BETWEEN_CURVE_CENTERS) * Constants.BLOCK_WIDTH,
                 CoinCurveMidPoints[centerIndex]);
-            var aCoin = Instantiate(Coin, pos, new Quaternion());
-            aCoin.GetComponent<SpriteRenderer>().color = Color.red;
-            aCoin.transform.localScale *= .5f;
-            return pos;
         }
         else
         {
-            Debug.Log($"second half {curveIndex}");
-            // Second half of curve.
             if (!CoinCurveMidPoints.ContainsKey(centerIndex) ||
                 !CoinCurveMidPoints.ContainsKey(centerIndex + 1))
             {
@@ -351,12 +339,13 @@ public class GridManager : MonoBehaviour
                 CoinCurveMidPoints[centerIndex] +
                 (CoinCurveMidPoints[centerIndex + 1] - CoinCurveMidPoints[centerIndex]) / 2;
 
-            var pos = new Vector2((curveIndex * DIST_BETWEEN_CURVES) * Constants.BLOCK_WIDTH, midY);
-            var aCoin = Instantiate(Coin, pos, new Quaternion());
-            aCoin.GetComponent<SpriteRenderer>().color = Color.blue;
-            aCoin.transform.localScale *= .5f;
-            return pos;
+            return new Vector2((curveIndex * DIST_BETWEEN_CURVES) * Constants.BLOCK_WIDTH, midY);
         }
+    }
+
+    private bool IsFirstHalfOfCurve(int x)
+    {
+        return (((x / DIST_BETWEEN_CURVES) * DIST_BETWEEN_CURVES) % DIST_BETWEEN_CURVE_CENTERS == 0);
     }
 
     private float findLargestGap(int x)
