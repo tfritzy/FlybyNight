@@ -291,20 +291,25 @@ public class GridManager : MonoBehaviour
 
         Vector2 b = new Vector2(c.Value.x - 1, a.Value.y);
 
-        var aCoin = Instantiate(Coin, a.Value, new Quaternion());
-        var bCoin = Instantiate(Coin, b, new Quaternion());
-        var cCoin = Instantiate(Coin, c.Value, new Quaternion());
-        aCoin.GetComponent<SpriteRenderer>().color = Color.red;
-        bCoin.GetComponent<SpriteRenderer>().color = Color.green;
-        cCoin.GetComponent<SpriteRenderer>().color = Color.blue;
-        aCoin.transform.localScale *= .5f;
-        bCoin.transform.localScale *= .5f;
-        cCoin.transform.localScale *= .5f;
+        // var aCoin = Instantiate(Coin, a.Value, new Quaternion());
+        // // var bCoin = Instantiate(Coin, b, new Quaternion());
+        // var cCoin = Instantiate(Coin, c.Value, new Quaternion());
+        // aCoin.GetComponent<SpriteRenderer>().color = Color.red;
+        // // bCoin.GetComponent<SpriteRenderer>().color = Color.green;
+        // cCoin.GetComponent<SpriteRenderer>().color = Color.blue;
+        // aCoin.transform.localScale *= .5f;
+        // // bCoin.transform.localScale *= .5f;
+        // cCoin.transform.localScale *= .5f;
 
         var ab = Vector2.Lerp(a.Value, b, t);
         var bc = Vector2.Lerp(b, c.Value, t);
         var result = Vector2.Lerp(ab, bc, t);
         Debug.Log($"P0 {a}, P1 {b}, P2 {c}, t {t}, value {result}");
+
+        var coin = Instantiate(Coin, result, new Quaternion());
+        coin.GetComponent<SpriteRenderer>().color = Color.white;
+        coin.transform.localScale *= .2f;
+
         return result;
     }
 
@@ -313,22 +318,28 @@ public class GridManager : MonoBehaviour
         int curveIndex = x / DIST_BETWEEN_CURVES;
         int centerIndex = x / DIST_BETWEEN_CURVE_CENTERS;
 
-        Debug.Log($"{curveIndex}, {centerIndex}");
+        Debug.Log($"curveIndex * DIST_BETWEEN_CURVES({curveIndex * DIST_BETWEEN_CURVES})")
 
-        if (curveIndex % 2 == 0 && centerIndex % 2 == 0)
+        if ((curveIndex * DIST_BETWEEN_CURVES) % DIST_BETWEEN_CURVE_CENTERS == 0)
         {
+            Debug.Log($"first half {curveIndex}");
             // First half of curve.
             if (!CoinCurveMidPoints.ContainsKey(centerIndex))
             {
                 return null;
             }
 
-            return new Vector2(
+            var pos = new Vector2(
                 (centerIndex * DIST_BETWEEN_CURVE_CENTERS) * Constants.BLOCK_WIDTH,
                 CoinCurveMidPoints[centerIndex]);
+            var aCoin = Instantiate(Coin, pos, new Quaternion());
+            aCoin.GetComponent<SpriteRenderer>().color = Color.red;
+            aCoin.transform.localScale *= .5f;
+            return pos;
         }
         else
         {
+            Debug.Log($"second half {curveIndex}");
             // Second half of curve.
             if (!CoinCurveMidPoints.ContainsKey(centerIndex) ||
                 !CoinCurveMidPoints.ContainsKey(centerIndex + 1))
@@ -339,7 +350,12 @@ public class GridManager : MonoBehaviour
             float midY =
                 CoinCurveMidPoints[centerIndex] +
                 (CoinCurveMidPoints[centerIndex + 1] - CoinCurveMidPoints[centerIndex]) / 2;
-            return new Vector2((curveIndex * DIST_BETWEEN_CURVES) * Constants.BLOCK_WIDTH, midY);
+
+            var pos = new Vector2((curveIndex * DIST_BETWEEN_CURVES) * Constants.BLOCK_WIDTH, midY);
+            var aCoin = Instantiate(Coin, pos, new Quaternion());
+            aCoin.GetComponent<SpriteRenderer>().color = Color.blue;
+            aCoin.transform.localScale *= .5f;
+            return pos;
         }
     }
 
