@@ -272,14 +272,44 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        RemoveTile((int)(pos.Value.x / Constants.BLOCK_WIDTH), (int)(pos.Value.y / Constants.BLOCK_WIDTH));
+
+        if (!shouldSpawnCoin(x))
+        {
+            return;
+        }
+
         var coin = Instantiate(Coin, pos.Value, new Quaternion());
         coin.GetComponent<Coin>().Init(x);
     }
 
+    bool shouldSpawnCoin(int x)
+    {
+        int fives = (x / 5) % 100;
+        if (fives == 3 || fives == 25 || fives == 73)
+        {
+            return true;
+        }
+
+        int tens = (x / 10) % 100;
+        if (tens == 14 || tens == 42 || tens == 83 || tens == 95)
+        {
+            return true;
+        }
+
+        int twenties = (x / 20) % 100;
+        if (fives == 37 || fives == 98)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private Vector2? Interpolate(int x)
     {
-        int low = DIST_BETWEEN_CURVES * (x / DIST_BETWEEN_CURVES);
-        float t = (x - low) / (float)DIST_BETWEEN_CURVES;
+        // int low = DIST_BETWEEN_CURVES * (x / DIST_BETWEEN_CURVES);
+        // float t = (x - low) / (float)DIST_BETWEEN_CURVES;
         // t = (1 - Mathf.Min(1, Mathf.Log10(t)));
         Vector2? a = GetPoint(x);
         Vector2? c = GetPoint(x + DIST_BETWEEN_CURVES);
@@ -299,15 +329,40 @@ public class GridManager : MonoBehaviour
             b = new Vector2(a.Value.x + 1, c.Value.y);
         }
 
+        // Binary search the spline for a close position.
+        float targetXPos = x * Constants.BLOCK_WIDTH;
+        float t = .5f;
+        float remainingSize = .5f;
+        Vector2 result = -Vector3.one;
+        int breakout = 0;
+        while (Mathf.Abs(result.x - targetXPos) > .05f)
+        {
+            // Debug.Log($"Log t at {t}, result at {result}, and target at {targetXPos}");
+            var ab = Vector2.Lerp(a.Value, b, t);
+            var bc = Vector2.Lerp(b, c.Value, t);
+            result = Vector2.Lerp(ab, bc, t);
 
-        var ab = Vector2.Lerp(a.Value, b, t);
-        var bc = Vector2.Lerp(b, c.Value, t);
-        var result = Vector2.Lerp(ab, bc, t);
+            if (result.x > targetXPos)
+            {
+                t -= remainingSize;
+            }
+            else
+            {
+                t += remainingSize;
+            }
 
-        // var coin = Instantiate(Coin, result, new Quaternion());
-        // coin.GetComponent<SpriteRenderer>().color = Color.white;
-        // coin.transform.localScale *= .2f;
+            remainingSize /= 2;
 
+            breakout += 1;
+            if (breakout > 10)
+            {
+                Debug.Log($"Giving up with t at {t}, result at {result}, and target at {targetXPos}");
+                return result;
+                break;
+            }
+        }
+
+        Debug.Log($"Found desired result in {breakout} moves");
         return result;
     }
 
@@ -483,6 +538,12 @@ public class GridManager : MonoBehaviour
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         Tilemap.SetTile(pos, TileCases[0]);
+    }
+
+    private void RemoveTile(int x, int y)
+    {
+        Vector3Int pos = new Vector3Int(x, y, 0);
+        Tilemap.SetTile(pos, null);
     }
 
     public static int GetCaveMidAtPos(int x)

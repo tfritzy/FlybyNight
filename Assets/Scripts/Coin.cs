@@ -29,7 +29,6 @@ public class Coin : MonoBehaviour
             foreach (ParticleSystem ps in collectionEffect.GetComponentsInChildren<ParticleSystem>())
             {
                 var main = ps.main;
-                main.startColor = Color.white;
             }
 
             collectionEffect.SetActive(true);

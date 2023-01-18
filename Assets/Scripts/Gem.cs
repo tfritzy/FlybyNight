@@ -6,10 +6,21 @@ public class Gem : MonoBehaviour
     public GameObject CollectionEffect;
     private bool isCollected;
     private long Column;
+    private Vector3 startPos;
 
     public void Init(long column)
     {
         this.Column = column;
+    }
+
+    void Start()
+    {
+        startPos = this.transform.position;
+    }
+
+    void Update()
+    {
+        this.transform.position = startPos + Vector3.up * Mathf.Sin(Time.time) * .07f;
     }
 
     void OnTriggerEnter2D(Collider2D other)
