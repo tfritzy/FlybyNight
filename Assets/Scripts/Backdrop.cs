@@ -14,7 +14,7 @@ public class Backdrop : MonoBehaviour
     {
         moonRenderer = this.GetComponent<SpriteRenderer>();
         pos = this.transform.position;
-        xOffset = this.transform.position.x - Managers.Camera.transform.position.x;
+        xOffset = this.transform.position.x - Managers.CameraFollow.transform.position.x;
         SetColor();
     }
 
@@ -22,7 +22,7 @@ public class Backdrop : MonoBehaviour
     float lastColorUpdateTime;
     void Update()
     {
-        pos.x = Managers.Camera.transform.position.x + xOffset;
+        pos.x = Managers.CameraFollow.transform.position.x + xOffset;
         this.transform.position = pos;
 
         if (Time.time < lastColorUpdateTime + TIME_BETWEEN_COLOR_UPDATES)

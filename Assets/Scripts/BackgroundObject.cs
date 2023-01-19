@@ -14,8 +14,8 @@ public class BackgroundObject : MonoBehaviour
 
     void Start()
     {
-        lastTargetPos = Managers.Camera.transform.position;
-        zDistToTarget = this.transform.position.z - Managers.Camera.transform.position.z;
+        lastTargetPos = Managers.CameraFollow.transform.position;
+        zDistToTarget = this.transform.position.z - Managers.CameraFollow.transform.position.z;
         parallaxFactor = Mathf.Atan(zDistToTarget / 3) / (Mathf.PI / 2);
         spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
@@ -27,17 +27,17 @@ public class BackgroundObject : MonoBehaviour
             return;
         }
 
-        float delta = Managers.Camera.transform.position.x - lastTargetPos.x;
+        float delta = Managers.CameraFollow.transform.position.x - lastTargetPos.x;
         delta *= parallaxFactor;
         this.transform.position += Vector3.right * delta;
-        lastTargetPos = Managers.Camera.transform.position;
+        lastTargetPos = Managers.CameraFollow.transform.position;
 
-        while (Managers.Camera.transform.position.x - this.transform.position.x > LAGGING_FLIP_DELTA)
+        while (Managers.CameraFollow.transform.position.x - this.transform.position.x > LAGGING_FLIP_DELTA)
         {
             this.transform.position = this.transform.position + Vector3.right * (FORWARD_FLIP_TO_DELTA + LAGGING_FLIP_DELTA);
         }
 
-        while (this.transform.position.x - Managers.Camera.transform.position.x > FORWARD_FLIP_TO_DELTA)
+        while (this.transform.position.x - Managers.CameraFollow.transform.position.x > FORWARD_FLIP_TO_DELTA)
         {
             this.transform.position = this.transform.position - Vector3.right * (FORWARD_FLIP_TO_DELTA + LAGGING_FLIP_DELTA);
         }

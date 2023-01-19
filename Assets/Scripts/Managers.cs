@@ -29,7 +29,7 @@ public static class Managers
     }
 
     private static CameraFollow camera;
-    public static CameraFollow Camera
+    public static CameraFollow CameraFollow
     {
         get
         {
@@ -38,6 +38,19 @@ public static class Managers
                 camera = GameObject.Find("Main Camera").GetComponent<CameraFollow>();
             }
             return camera;
+        }
+    }
+
+    private static Camera _camera;
+    public static Camera Camera
+    {
+        get
+        {
+            if (_camera == null)
+            {
+                _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+            }
+            return _camera;
         }
     }
 
@@ -108,6 +121,34 @@ public static class Managers
             }
 
             return _leaderboardManager;
+        }
+    }
+
+    private static Transform _collectionTargetPos;
+    public static Transform CollectionTargetPos
+    {
+        get
+        {
+            if (_collectionTargetPos == null)
+            {
+                _collectionTargetPos = GameObject.Find("CollectionTargetPos").transform;
+            }
+
+            return _collectionTargetPos;
+        }
+    }
+
+    private static Transform _canvas;
+    public static Transform Canvas
+    {
+        get
+        {
+            if (_canvas == null)
+            {
+                _canvas = GameObject.Find("Canvas").transform;
+            }
+
+            return _canvas;
         }
     }
 }

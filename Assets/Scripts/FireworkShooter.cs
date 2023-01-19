@@ -15,7 +15,7 @@ public class FireworkShooter : MonoBehaviour
 
     void Start()
     {
-        offsetFirePos = this.transform.position - Managers.Camera.transform.position;
+        offsetFirePos = this.transform.position - Managers.CameraFollow.transform.position;
         fireFireworkTimes = new LinkedList<float>();
     }
 
@@ -36,7 +36,7 @@ public class FireworkShooter : MonoBehaviour
 
     public void Fire()
     {
-        this.transform.position = Managers.Camera.transform.position + offsetFirePos;
+        this.transform.position = Managers.CameraFollow.transform.position + offsetFirePos;
         float fireTime = Time.time + .5f;
         for (int i = 0; i < NumFireworks; i++)
         {

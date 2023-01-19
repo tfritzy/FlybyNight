@@ -241,28 +241,35 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        float midPoint = findLargestGap(x);
+        int index = x / DIST_BETWEEN_CURVE_CENTERS;
+        CoinCurveMidPoints[index] = midPoint;
+
+        int obstacleIndex = (x + Constants.DIST_BETWEEN_OBSTACLES / 2) / Constants.DIST_BETWEEN_OBSTACLES;
+        if (obstacleIndex % 2 != 0)
+        {
+            return;
+        }
+
         if (x <= GameState.Player.GetHighestRegionUnlocked() * Constants.DISTANCE_BETWEEN_SAVES)
         {
             return;
         }
 
-        float midPoint = findLargestGap(x);
-        int index = x / DIST_BETWEEN_CURVE_CENTERS;
-        CoinCurveMidPoints[index] = midPoint;
-
         float xActualPos = x * Constants.BLOCK_WIDTH;
-        GameObject gem = Instantiate(
-            GemPrefab,
-            new Vector3(xActualPos, midPoint, 0),
-            new Quaternion(),
-            this.transform);
-        gem.GetComponent<Gem>().Init(x);
-        InstantiatedGems.Add(gem);
+        // GameObject gem = Instantiate(
+        //     GemPrefab,
+        //     new Vector3(xActualPos, midPoint, 0),
+        //     new Quaternion(),
+        //     this.transform);
+        // gem.GetComponent<Gem>().Init(x);
+        // InstantiatedGems.Add(gem);
     }
 
     private const int DIST_BETWEEN_CURVE_CENTERS = Constants.DIST_BETWEEN_OBSTACLES / 2;
     // There are two curves for each gap between a gem and an obstacle.
     private const int DIST_BETWEEN_CURVES = Constants.DIST_BETWEEN_OBSTACLES / 4;
+    private const float HALF_CURVE_WORLD_DIST = DIST_BETWEEN_CURVES * Constants.BLOCK_WIDTH;
     private void SpawnCoin(int x)
     {
         Vector2? pos = Interpolate(x);
@@ -273,6 +280,8 @@ public class GridManager : MonoBehaviour
         }
 
         RemoveTile((int)(pos.Value.x / Constants.BLOCK_WIDTH), (int)(pos.Value.y / Constants.BLOCK_WIDTH));
+        RemoveTile((int)(pos.Value.x / Constants.BLOCK_WIDTH), (int)((pos.Value.y + 1) / Constants.BLOCK_WIDTH));
+        RemoveTile((int)(pos.Value.x / Constants.BLOCK_WIDTH), (int)((pos.Value.y - 1) / Constants.BLOCK_WIDTH));
 
         if (!shouldSpawnCoin(x))
         {
@@ -285,20 +294,25 @@ public class GridManager : MonoBehaviour
 
     bool shouldSpawnCoin(int x)
     {
-        int fives = (x / 5) % 100;
-        if (fives == 3 || fives == 25 || fives == 73)
+        if (x % 2 != 0)
+        {
+            return false;
+        }
+
+        int fives = (x / 10) % 20;
+        if (fives == 3 || fives == 8 || fives == 14)
         {
             return true;
         }
 
-        int tens = (x / 10) % 100;
-        if (tens == 14 || tens == 42 || tens == 83 || tens == 95)
+        int tens = (x / 20) % 20;
+        if (tens == 14 || tens == 1 || tens == 10 || tens == 19)
         {
             return true;
         }
 
-        int twenties = (x / 20) % 100;
-        if (fives == 37 || fives == 98)
+        int twenties = (x / 40) % 20;
+        if (fives == 5 || fives == 12)
         {
             return true;
         }
@@ -322,11 +336,11 @@ public class GridManager : MonoBehaviour
         Vector2 b;
         if (IsFirstHalfOfCurve(x))
         {
-            b = new Vector2(c.Value.x - 1, a.Value.y);
+            b = new Vector2(c.Value.x - HALF_CURVE_WORLD_DIST, a.Value.y);
         }
         else
         {
-            b = new Vector2(a.Value.x + 1, c.Value.y);
+            b = new Vector2(a.Value.x + HALF_CURVE_WORLD_DIST, c.Value.y);
         }
 
         // Binary search the spline for a close position.
@@ -358,11 +372,9 @@ public class GridManager : MonoBehaviour
             {
                 Debug.Log($"Giving up with t at {t}, result at {result}, and target at {targetXPos}");
                 return result;
-                break;
             }
         }
 
-        Debug.Log($"Found desired result in {breakout} moves");
         return result;
     }
 

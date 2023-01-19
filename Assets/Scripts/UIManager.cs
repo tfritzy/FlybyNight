@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
         ResurrectButton.SetActive(false);
         SettingsButton.SetActive(false);
         LeaderboardButton.SetActive(false);
-        FuelGauge.SetActive(true);
+        // FuelGauge.SetActive(true);
         CloseSettings();
     }
 
