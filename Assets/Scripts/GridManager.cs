@@ -322,9 +322,6 @@ public class GridManager : MonoBehaviour
 
     private Vector2? Interpolate(int x)
     {
-        // int low = DIST_BETWEEN_CURVES * (x / DIST_BETWEEN_CURVES);
-        // float t = (x - low) / (float)DIST_BETWEEN_CURVES;
-        // t = (1 - Mathf.Min(1, Mathf.Log10(t)));
         Vector2? a = GetPoint(x);
         Vector2? c = GetPoint(x + DIST_BETWEEN_CURVES);
 
@@ -336,11 +333,11 @@ public class GridManager : MonoBehaviour
         Vector2 b;
         if (IsFirstHalfOfCurve(x))
         {
-            b = new Vector2(c.Value.x - HALF_CURVE_WORLD_DIST, a.Value.y);
+            b = new Vector2(c.Value.x - 1, a.Value.y);
         }
         else
         {
-            b = new Vector2(a.Value.x + HALF_CURVE_WORLD_DIST, c.Value.y);
+            b = new Vector2(a.Value.x + 1, c.Value.y);
         }
 
         // Binary search the spline for a close position.
