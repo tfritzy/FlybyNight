@@ -20,8 +20,8 @@ public class Helicopter : MonoBehaviour
     private const float FUEL_BURN_RATE_PERCENT_PER_S = .1f;
 
     // Blade variables
-    private const float MAX_BLADE_A_VEL = 2000;
-    private const float MIN_BLADE_A_VEL = 500;
+    private const float MAX_BLADE_A_VEL = 3000;
+    private const float MIN_BLADE_A_VEL = 1500;
     private const float BLADE_A_VEL_DECEL = 300;
     private const float BLADE_A_VEL_ACCEL = 600;
     private float bladesAngularVelocity;

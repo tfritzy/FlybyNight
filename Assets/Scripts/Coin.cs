@@ -40,8 +40,6 @@ public class Coin : MonoBehaviour
         }
     }
 
-
-
     public void Collect()
     {
         GameState.Player.GemCount += 1;
