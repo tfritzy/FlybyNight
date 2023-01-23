@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Managers
@@ -150,5 +151,16 @@ public static class Managers
 
             return _canvas;
         }
+    }
+
+    private static Dictionary<SkinType, GameObject> _helicoptorBodies = new Dictionary<SkinType, GameObject>();
+    public static GameObject GetHelicoptorBody(SkinType skinType)
+    {
+        if (!_helicoptorBodies.ContainsKey(skinType))
+        {
+            _helicoptorBodies[skinType] = Resources.Load<GameObject>($"Helicoptors/{skinType}");
+        }
+
+        return _helicoptorBodies[skinType];
     }
 }
