@@ -7,15 +7,13 @@ public class PreviewHelicopter : MonoBehaviour
 {
     private Transform Blades;
     private Transform Rotor;
-    Vector3 movementProportions = new Vector3(.5f, 1f);
+    private Vector3 movementProportions = new Vector3(.5f, 1f);
+    private bool moves;
 
-    void Start()
+    public void Init(bool moves)
     {
-        Init();
-    }
+        this.moves = moves;
 
-    public void Init()
-    {
         this.Blades = this.transform.Find("Blades");
         this.Rotor = this.transform.Find("Rotor");
 
@@ -37,13 +35,16 @@ public class PreviewHelicopter : MonoBehaviour
 
     void Update()
     {
-        this.transform.localPosition =
-            (Vector3.forward * -1f) +
-            (movementProportions * 20f) *
-                (Mathf.Sin(Time.time) * .5f +
-                 Mathf.Sin(10 * Time.time) * .2f +
-                 Mathf.Sin(5 * Time.time) * .2f +
-                 Mathf.Sin(20 * Time.time) * .1f);
+        if (moves)
+        {
+            this.transform.localPosition =
+                        (Vector3.forward * -1f) +
+                        (movementProportions * 20f) *
+                            (Mathf.Sin(Time.time) * .3f +
+                             Mathf.Sin(10 * Time.time) * .1f +
+                             Mathf.Sin(5 * Time.time) * .1f +
+                             Mathf.Sin(20 * Time.time) * .1f);
+        }
 
         if (Blades != null)
         {

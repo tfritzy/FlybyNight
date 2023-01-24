@@ -8,7 +8,8 @@ public class PlayerData
     private const DifficultySetting difficultySetting = DifficultySetting.Casual;
     public float SFXLevel;
     public float MusicLevel;
-    public HashSet<SkinType> PurchasedSkins = new HashSet<SkinType>();
+    public HashSet<SkinType> PurchasedSkins = new HashSet<SkinType> { SkinType.Default };
+    public SkinType SelectedSkin;
 
     public int GetHighestRegionUnlocked()
     {
