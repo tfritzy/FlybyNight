@@ -12,8 +12,11 @@ public class Store : MonoBehaviour
         SkinType.Default, SkinType.MechaCoptor, SkinType.NightCoptor, SkinType.SteamPunk,
     };
     private SkinType selectedSkin;
-    private Color Gold = ColorExtensions.Create("#FFC84D");
+    private Color Gold = ColorExtensions.Create("#F8D27B");
     private Color ActivePurchaseButtonColor = ColorExtensions.Create("#CCF9FF");
+    private Image PurchaseButtonOutline;
+    private Text PurchaseButtonText;
+    private Image PurchaseButtonGemIcon;
 
     struct SkinDetails
     {
@@ -44,7 +47,7 @@ public class Store : MonoBehaviour
 
     void Start()
     {
-        SelectSkin(GameState.Player.SelectedSkin.ToString());
+        SelectSkin(GameState.Player.SelectedSkin);
         InitPurchaseButtons();
     }
 
@@ -55,6 +58,7 @@ public class Store : MonoBehaviour
         {
             var button = ScrollContent.GetChild(i);
             BuildUiHeli(skinDetails.Type, button, false);
+            button.GetComponent<Button>().onClick.AddListener(() => SelectSkin(skinDetails.Type));
             i += 1;
         }
 
@@ -68,7 +72,7 @@ public class Store : MonoBehaviour
     {
         var newHeli = GameObject.Instantiate(
             Managers.GetHelicoptorBody(skinType),
-            Vector3.zero,
+            parent.transform.position,
             Quaternion.Euler(0, 0, -10),
             parent);
         var previewScript = newHeli.AddComponent<PreviewHelicopter>();
@@ -87,10 +91,9 @@ public class Store : MonoBehaviour
     }
 
     private GameObject previewHeli;
-    public void SelectSkin(string type)
+    public void SelectSkin(SkinType type)
     {
-        SkinType parsedType = (SkinType)System.Enum.Parse(typeof(SkinType), type);
-        selectedSkin = parsedType;
+        selectedSkin = type;
         Destroy(previewHeli);
         this.previewHeli = BuildUiHeli(selectedSkin, PreviewPos, true);
         FormatPurchaseButton();
@@ -107,27 +110,46 @@ public class Store : MonoBehaviour
 
     private void FormatPurchaseButton()
     {
+        PurchaseButtonOutline = PurchaseButton.GetComponent<Image>();
+        PurchaseButtonText = PurchaseButton.GetComponentInChildren<Text>();
+        PurchaseButtonGemIcon = PurchaseButton.transform.Find("Gem").GetComponentInChildren<Image>();
+
         if (!GameState.Player.PurchasedSkins.Contains(selectedSkin))
         {
-            PurchaseButton.GetComponent<Image>().color = Gold;
+            PurchaseButtonOutline.color = Gold;
 
-            Text text = PurchaseButton.GetComponentInChildren<Text>();
-            text.text = Skins[selectedSkin].Price.ToString();
-            text.color = Gold;
+            PurchaseButtonText.text = string.Format("{0:#,0}", Skins[selectedSkin].Price);
+            PurchaseButtonText.color = Gold;
+
+            PurchaseButtonGemIcon.color = Gold;
+            PurchaseButtonGemIcon.gameObject.SetActive(true);
+
+            if (Skins[selectedSkin].Price >= 10000)
+            {
+                PurchaseButtonGemIcon.transform.localPosition = Vector3.right * -207f;
+            }
+            else
+            {
+                PurchaseButtonGemIcon.transform.localPosition = Vector3.right * -185f;
+            }
         }
         else if (GameState.Player.SelectedSkin == selectedSkin)
         {
-            PurchaseButton.GetComponent<Image>().color = ActivePurchaseButtonColor;
-            Text text = PurchaseButton.GetComponentInChildren<Text>();
-            text.text = "Equipped";
-            text.color = ActivePurchaseButtonColor;
+            PurchaseButtonOutline.color = ActivePurchaseButtonColor;
+
+            PurchaseButtonText.text = "Equipped";
+            PurchaseButtonText.color = ActivePurchaseButtonColor;
+
+            PurchaseButtonGemIcon.gameObject.SetActive(false);
         }
         else
         {
-            PurchaseButton.GetComponent<Image>().color = ActivePurchaseButtonColor;
-            Text text = PurchaseButton.GetComponentInChildren<Text>();
-            text.text = "Equip";
-            text.color = ActivePurchaseButtonColor;
+            PurchaseButtonOutline.color = ActivePurchaseButtonColor;
+
+            PurchaseButtonText.text = "Equip";
+            PurchaseButtonText.color = ActivePurchaseButtonColor;
+
+            PurchaseButtonGemIcon.gameObject.SetActive(false);
         }
     }
 }

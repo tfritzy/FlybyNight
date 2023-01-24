@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674860395468948938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.054300077, y: -0.026299963, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.081915006, y: 0.081915006, z: 0.081915006}
   m_Children: []
   m_Father: {fileID: 674860396419245677}
@@ -106,13 +106,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674860396112762762}
-  m_LocalRotation: {x: -0.73075825, y: 0, z: 0, w: 0.6826363}
-  m_LocalPosition: {x: 0.135, y: 0.075, z: 0}
-  m_LocalScale: {x: 0.97219896, y: 0.87847954, z: 0.5203474}
+  m_LocalRotation: {x: -0.7307422, y: 0.0048438627, z: -0.004524883, w: 0.68262136}
+  m_LocalPosition: {x: 0.089, y: 0.1, z: -0.122}
+  m_LocalScale: {x: 1.0565963, y: 0.95474094, z: 0.56551915}
   m_Children: []
   m_Father: {fileID: 674860396419245677}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -93.9, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -93.973, y: -11.003998, z: 11.029999}
 --- !u!212 &674860396112762764
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -154,7 +154,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0bdda299a28a5ec479ea1db9e1d0d09e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4509804}
+  m_Color: {r: 0.50980395, g: 0.5372549, b: 0.36078432, a: 0.4509804}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -188,13 +188,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674860396194874867}
-  m_LocalRotation: {x: -0.72537434, y: 0, z: 0, w: 0.6883546}
-  m_LocalPosition: {x: 0.13300008, y: 0.07530003, z: 0}
-  m_LocalScale: {x: 0.22112842, y: 0.26034495, z: 0.18212163}
+  m_LocalRotation: {x: -0.7253584, y: 0.004879252, z: -0.0044866926, w: 0.68833953}
+  m_LocalPosition: {x: 0.08730005, y: 0.100300014, z: -0.122}
+  m_LocalScale: {x: 0.22977455, y: 0.27052444, z: 0.1892426}
   m_Children: []
   m_Father: {fileID: 674860396419245677}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -93, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -93.094, y: -14.182007, z: 14.2140045}
 --- !u!212 &674860396194874869
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -236,7 +236,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 810a5d51260d66745b4b7a6c5d528f50, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5137255, g: 0.5372549, b: 0.3647059, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
