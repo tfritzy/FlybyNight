@@ -25,6 +25,7 @@ public static class GameState
     private static readonly string saveFilePath = Application.persistentDataPath + "/playerData.json";
     public static void Load()
     {
+        Debug.Log(saveFilePath);
         Player = FileEncryptor.ReadFile(saveFilePath);
     }
 

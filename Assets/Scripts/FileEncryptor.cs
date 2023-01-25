@@ -39,10 +39,9 @@ public static class FileEncryptor
 
             // Read the entire file into a String value.
             string text = reader.ReadToEnd();
+            Debug.Log(text);
 
             dataStream.Close();
-
-            Debug.Log(text);
 
             // Deserialize the JSON data 
             //  into a pattern matching the GameData class.
@@ -77,7 +76,6 @@ public static class FileEncryptor
 
         // Serialize the object into JSON and save string.
         string jsonString = JsonUtility.ToJson(data);
-        Debug.Log(jsonString);
 
         // Write to the innermost stream (which will encrypt).
         await sWriter.WriteAsync(jsonString);

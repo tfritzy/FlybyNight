@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject ObjectToTrack;
     public Vector3 Offset;
     public float ShakeAmount;
     public Image FadeToBlackSprite;
@@ -16,7 +15,7 @@ public class CameraFollow : MonoBehaviour
     private Vector3 initialShakePos;
     private int MIN_TELEPORT_DISTANCE = 40;
 
-    private Vector3 targetPos => MutedY(ObjectToTrack.transform.position) - Offset;
+    private Vector3 targetPos => MutedY(Managers.Helicopter.transform.position) - Offset;
 
     public enum State
     {

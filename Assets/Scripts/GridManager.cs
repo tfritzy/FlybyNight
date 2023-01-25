@@ -108,7 +108,7 @@ public class GridManager : MonoBehaviour
         SpawnObstacle(x - 4);
         SpawnGem(x - 5);
         UpdateVisualGridForColumn(x - 10);
-        SpawnCoin(x - DIST_BETWEEN_CURVE_CENTERS - 5);
+        // SpawnCoin(x - DIST_BETWEEN_CURVE_CENTERS - 5);
     }
 
     private void SpawnTilesForColumn(int x)
@@ -192,7 +192,7 @@ public class GridManager : MonoBehaviour
 
     private static int GetObstacleHeight()
     {
-        return 6;
+        return 7;
     }
 
     private static int CenterGapObstacleHalfHeight()
@@ -213,7 +213,7 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        int obstacleType = Random.Range(0, 3);
+        int obstacleType = this.random.Next(0, 3);
         switch (obstacleType)
         {
             case (0):
@@ -257,13 +257,13 @@ public class GridManager : MonoBehaviour
         }
 
         float xActualPos = x * Constants.BLOCK_WIDTH;
-        // GameObject gem = Instantiate(
-        //     GemPrefab,
-        //     new Vector3(xActualPos, midPoint, 0),
-        //     new Quaternion(),
-        //     this.transform);
-        // gem.GetComponent<Gem>().Init(x);
-        // InstantiatedGems.Add(gem);
+        GameObject gem = Instantiate(
+            GemPrefab,
+            new Vector3(xActualPos, midPoint, 0),
+            new Quaternion(),
+            this.transform);
+        gem.GetComponent<Gem>().Init(x);
+        InstantiatedGems.Add(gem);
     }
 
     private const int DIST_BETWEEN_CURVE_CENTERS = Constants.DIST_BETWEEN_OBSTACLES / 2;
@@ -443,7 +443,7 @@ public class GridManager : MonoBehaviour
 
     private void SpawnVerticalBarObstacle(int x)
     {
-        int centerHeight = GetCaveMidAtPos(x) + Random.Range(-1, 1);
+        int centerHeight = GetCaveMidAtPos(x) + this.random.Next(-1, 1);
 
         for (int y = centerHeight - GetObstacleHeight() / 2; y < centerHeight + GetObstacleHeight() / 2; y++)
         {

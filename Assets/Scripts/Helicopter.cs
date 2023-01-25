@@ -17,7 +17,7 @@ public class Helicopter : MonoBehaviour
     private static readonly Vector3 START_VELOCITY = new Vector3(7, 3, 0);
     private Rigidbody2D rb;
     private SpriteRenderer[] bodyParts;
-    private const float FUEL_BURN_RATE_PERCENT_PER_S = .1f;
+    private const float FUEL_BURN_RATE_PERCENT_PER_S = .15f;
 
     // Blade variables
     private const float MAX_BLADE_A_VEL = 3000;
@@ -146,7 +146,7 @@ public class Helicopter : MonoBehaviour
         this.targetChoppingPitch = actionTargetPitch;
         bladesAngularVelocity = Mathf.Min(MAX_BLADE_A_VEL, bladesAngularVelocity + Time.fixedDeltaTime * BLADE_A_VEL_ACCEL);
         this.transform.rotation = flyingUpRotation;
-        // this.Fuel -= Time.deltaTime * FUEL_BURN_RATE_PERCENT_PER_S;
+        this.Fuel -= Time.deltaTime * FUEL_BURN_RATE_PERCENT_PER_S;
     }
 
     private void DriftDown()

@@ -31,6 +31,12 @@ public class UIManager : MonoBehaviour
         SettingsWindow.gameObject.SetActive(false);
     }
 
+    void Start()
+    {
+        AudioManager.SetSFXLevel(GameState.Player.SFXLevel);
+        AudioManager.SetMusicLevel(GameState.Player.MusicLevel);
+    }
+
     void Update()
     {
         UpdateColorLoop();
@@ -42,7 +48,7 @@ public class UIManager : MonoBehaviour
         ResurrectButton.SetActive(false);
         SettingsButton.SetActive(false);
         LeaderboardButton.SetActive(false);
-        // FuelGauge.SetActive(true);
+        FuelGauge.SetActive(true);
         CloseSettings();
     }
 
@@ -161,47 +167,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // private void SetupFramerateButtons()
-    // {
-    //     if (Application.targetFrameRate == 30)
-    //     {
-    //         Set30FPS();
-    //     }
-    //     else if (Application.targetFrameRate == 60)
-    //     {
-    //         Set60FPS();
-    //     }
-    //     else
-    //     {
-    //         Set30FPS();
-    //     }
-    // }
+    public void TakeOff()
+    {
+        Managers.Helicopter.TakeOff();
+    }
 
-    // public void Set60FPS()
-    // {
-    //     Application.targetFrameRate = 60;
-    //     Time.fixedDeltaTime = 1f / 60f;
-    //     FormatFPSButtons();
-    // }
-
-    // public void Set30FPS()
-    // {
-    //     Application.targetFrameRate = 30;
-    //     Time.fixedDeltaTime = 1f / 30f;
-    //     FormatFPSButtons();
-    // }
-
-    // private Color toggleUnselectedBaseColor = ColorExtensions.Create("#434343");
-    // private Color toggleUnselectedTextColor = ColorExtensions.Create("#808080");
-    // private Color toggleSelectedTextColor = Color.white;
-    // private void FormatFPSButtons()
-    // {
-    //     Color activeColor = GridManager.GetColorForColumn(Managers.Helicopter.Distance);
-    //     Transform fps30 = FPSSelectGroup.transform.Find("30 FPS");
-    //     Transform fps60 = FPSSelectGroup.transform.Find("60 FPS");
-    //     fps30.GetComponent<Image>().color = Application.targetFrameRate == 30 ? activeColor : toggleUnselectedBaseColor;
-    //     fps60.GetComponent<Image>().color = Application.targetFrameRate == 60 ? activeColor : toggleUnselectedBaseColor;
-    //     fps30.Find("Text").GetComponent<Text>().color = Application.targetFrameRate == 30 ? toggleSelectedTextColor : toggleUnselectedTextColor;
-    //     fps60.Find("Text").GetComponent<Text>().color = Application.targetFrameRate == 60 ? toggleSelectedTextColor : toggleUnselectedTextColor;
-    // }
+    public void Retry()
+    {
+        Managers.Helicopter.Resurrect();
+    }
 }

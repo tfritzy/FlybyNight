@@ -56,6 +56,7 @@ public class Gem : MonoBehaviour
 
     public void Reset()
     {
+        Debug.Log($"Resetting {GameState.Player.GetFirePosOfHighestRegion()} > {Column}");
         if (GameState.Player.GetFirePosOfHighestRegion() > Column)
         {
             return;
